@@ -44,4 +44,27 @@ const registerUser = (req, res) => {
   });
 };
 
-export { registerUser };
+const loginUser = (req, res) => {
+  const { phone, password } = req.body;
+
+  if (!phone || !password) {
+    return res.status(400).json({ message: 'Please provide phone and password' });
+  }
+
+  const user = users.find((user) => user.phone === phone);
+
+  if (user && user.password === password) { // In a real app, compare hashed passwords
+    console.log('Login successful for:', user.phone);
+    res.json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+    });
+  } else {
+    res.status(401).json({ message: 'Invalid phone number or password' });
+  }
+};
+
+export { registerUser, loginUser };
