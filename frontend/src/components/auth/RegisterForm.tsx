@@ -7,7 +7,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
-  const [vehicleId, setVehicleId] = useState('');
+  const [licensePlate, setLicensePlate] = useState('');
   const [drivingLicenseId, setDrivingLicenseId] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -19,7 +19,7 @@ const RegisterForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password, phone, role, vehicleId, drivingLicenseId }),
+        body: JSON.stringify({ name, email, password, phone, role, licensePlate, drivingLicenseId }),
       });
 
       if (res.ok) {
@@ -104,19 +104,19 @@ const RegisterForm = () => {
 
       <div>
         <label
-          htmlFor="vehicleId"
+          htmlFor="licensePlate"
           className="block text-sm font-medium text-gray-700"
         >
-          Vehicle ID
+          License Plate
         </label>
         <div className="mt-1">
           <input
-            id="vehicleId"
-            name="vehicleId"
+            id="licensePlate"
+            name="licensePlate"
             type="text"
             required
-            value={vehicleId}
-            onChange={(e) => setVehicleId(e.target.value)}
+            value={licensePlate}
+            onChange={(e) => setLicensePlate(e.target.value)}
             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
         </div>

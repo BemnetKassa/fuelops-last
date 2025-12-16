@@ -1,9 +1,9 @@
 const users = []; // In-memory user store for now
 
 const registerUser = (req, res) => {
-  const { name, email, password, phone, role, vehicleId, drivingLicenseId } = req.body;
+  const { name, email, password, phone, role, licensePlate, drivingLicenseId } = req.body;
 
-  if (!name || !email || !password || !phone || !role || !vehicleId || !drivingLicenseId) {
+  if (!name || !email || !password || !phone || !role || !licensePlate || !drivingLicenseId) {
     return res.status(400).json({ message: 'Please enter all fields' });
   }
 
@@ -25,7 +25,7 @@ const registerUser = (req, res) => {
     password, // In a real app, you should hash this
     phone,
     role,
-    vehicleId,
+    licensePlate,
     drivingLicenseId,
   };
 
@@ -39,7 +39,7 @@ const registerUser = (req, res) => {
     email: user.email,
     phone: user.phone,
     role: user.role,
-    vehicleId: user.vehicleId,
+    licensePlate: user.licensePlate,
     drivingLicenseId: user.drivingLicenseId,
   });
 };
