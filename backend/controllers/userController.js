@@ -1,74 +1,91 @@
-import { users } from '../db/index.js';
+import { prisma } from '../db/prisma.js';
+import bcrypt from 'bcryptjs';
 
-const registerUser = (req, res) => {
+const registerUser = async (req, res) => {
   const { name, email, password, phone, role, licensePlate, drivingLicenseId } = req.body;
 
   if (!name || !email || !password || !phone || !role || !licensePlate || !drivingLicenseId) {
     return res.status(400).json({ message: 'Please enter all fields' });
   }
 
-  // For public registration, only allow 'driver' role
-  if (role !== 'driver') {
-      return res.status(400).json({ message: 'Public registration is only for drivers.' });
+  if (role !== 'DRIVER') {
+    return res.status(400).json({ message: 'Public registration is only for drivers.' });
   }
 
-  const userExists = users.find((user) => user.email === email);
+  try {
+    const userExists = await prisma.user.findUnique({ where: { email } });
 
-  if (userExists) {
-    return res.status(400).json({ message: 'User already exists' });
-  }
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
 
-  const user = {
-    id: `user-${Date.now()}`,
-    name,
-    email,
-    password, // In a real app, you should hash this
-    phone,
-    role,
-    licensePlate,
-    drivingLicenseId,
-    // Add driver-specific properties
-    accountStatus: 'active', // 'active' | 'suspended'
-    fuelType: 'Petrol', // 'Petrol' | 'Diesel'
-    dailyQuota: {
-      max: 20, // liters
-      current: 20,
-    },
-  };
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-  users.push(user);
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        phone,
+        role,
+        driverProfile: {
+          create: {
+            // Default values are set in the schema
+          },
+        },
+        vehicles: {
+          create: {
+            plateNumber: licensePlate,
+            // You might want to add a way to specify fuel type on registration
+            fuelType: 'PETROL', 
+          },
+        },
+      },
+      include: {
+        driverProfile: true,
+        vehicles: true,
+      },
+    });
 
-  console.log('Registered users:', users);
-
-  res.status(201).json({
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    role: user.role,
-  });
-};
-
-const loginUser = (req, res) => {
-  const { phone, password } = req.body;
-
-  if (!phone || !password) {
-    return res.status(400).json({ message: 'Please provide phone and password' });
-  }
-
-  const user = users.find((user) => user.phone === phone);
-
-  if (user && user.password === password) { // In a real app, compare hashed passwords
-    console.log('Login successful for:', user.phone);
-    res.json({
+    res.status(201).json({
       id: user.id,
       name: user.name,
       email: user.email,
       phone: user.phone,
       role: user.role,
     });
-  } else {
-    res.status(401).json({ message: 'Invalid phone number or password' });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ message: 'Server error during registration' });
+  }
+};
+
+const loginUser = async (req, res) => {
+  const { phone, password } = req.body;
+
+  if (!phone || !password) {
+    return res.status(400).json({ message: 'Please provide phone and password' });
+  }
+
+  try {
+    const user = await prisma.user.findFirst({ where: { phone } });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      console.log('Login successful for:', user.phone);
+      res.json({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+      });
+    } else {
+      res.status(401).json({ message: 'Invalid phone number or password' });
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Server error during login' });
   }
 };
 

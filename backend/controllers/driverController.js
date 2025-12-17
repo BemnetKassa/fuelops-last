@@ -1,50 +1,99 @@
-// backend/controllers/driverController.js
-import { users, fuelRecords, reservations } from '../db/index.js';
+import { prisma } from '../db/prisma.js';
 
 // @desc    Get driver dashboard data
-// @route   GET /api/driver/dashboard/:driverId
+// @route   GET /api/driver/dashboard
 // @access  Private
-export const getDriverDashboard = (req, res) => {
+export const getDriverDashboard = async (req, res) => {
   // In a real app, you'd get the driverId from an authenticated session (e.g., JWT)
   // For now, we'll simulate fetching data for the first registered user if they are a driver.
-  const driver = users.find(u => u.role === 'driver');
+  try {
+    const driverUser = await prisma.user.findFirst({
+      where: { role: 'DRIVER' },
+      include: {
+        driverProfile: true,
+        vehicles: true,
+        reservations: {
+          where: {
+            status: { in: ['PENDING', 'CONFIRMED'] },
+            expiresAt: { gt: new Date() }
+          },
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+          include: {
+            station: true,
+          }
+        }
+      }
+    });
 
-  if (!driver) {
-    return res.status(404).json({ message: 'No driver found.' });
+    if (!driverUser || !driverUser.driverProfile) {
+      return res.status(404).json({ message: 'No driver found or driver profile is incomplete.' });
+    }
+
+    const activeReservation = driverUser.reservations[0];
+    const primaryVehicle = driverUser.vehicles[0];
+
+    const dashboardData = {
+      dailyQuota: {
+        remaining: driverUser.driverProfile.dailyQuotaRemaining,
+        total: driverUser.driverProfile.dailyQuotaTotal,
+      },
+      accountStatus: {
+        status: driverUser.driverProfile.accountStatus.toLowerCase(), // 'active' | 'suspended'
+        plateNumber: primaryVehicle ? primaryVehicle.plateNumber : 'N/A',
+        fuelType: primaryVehicle ? primaryVehicle.fuelType : 'N/A',
+      },
+      activeReservation: activeReservation ? {
+        stationName: activeReservation.station.name,
+        liters: activeReservation.liters,
+        expiresAt: activeReservation.expiresAt.toISOString(),
+      } : null,
+    };
+
+    res.json(dashboardData);
+  } catch (error) {
+    console.error("Error fetching driver dashboard:", error);
+    res.status(500).json({ message: "Server error" });
   }
-
-  // Find the latest active reservation for this driver
-  const activeReservation = reservations
-    .filter(r => r.driverId === driver.id && r.status === 'active')
-    .sort((a, b) => b.createdAt - a.createdAt)[0];
-
-  const dashboardData = {
-    dailyQuota: {
-      remaining: driver.dailyQuota.current,
-      total: driver.dailyQuota.max,
-    },
-    accountStatus: {
-      status: driver.accountStatus,
-      plateNumber: driver.licensePlate,
-      fuelType: driver.fuelType || 'Petrol', // Default to Petrol if not set
-    },
-    activeReservation: activeReservation || null,
-  };
-
-  res.json(dashboardData);
 };
 
 // @desc    Get driver transaction history
-// @route   GET /api/driver/history/:driverId
+// @route   GET /api/driver/history
 // @access  Private
-export const getDriverHistory = (req, res) => {
-  const driver = users.find(u => u.role === 'driver');
+export const getDriverHistory = async (req, res) => {
+    // Using the same logic to find the first driver for now
+    try {
+        const driverUser = await prisma.user.findFirst({
+            where: { role: 'DRIVER' },
+        });
 
-  if (!driver) {
-    return res.status(404).json({ message: 'No driver found.' });
-  }
+        if (!driverUser) {
+            return res.status(404).json({ message: 'No driver found.' });
+        }
 
-  const history = fuelRecords.filter(record => record.driverId === driver.id);
+        const history = await prisma.fuelRecord.findMany({
+            where: { userId: driverUser.id },
+            include: {
+                station: {
+                    select: { name: true }
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
 
-  res.json(history);
+        const formattedHistory = history.map(record => ({
+            id: record.id,
+            stationName: record.station.name,
+            liters: record.liters,
+            amount: record.amount,
+            date: record.createdAt.toISOString(),
+        }));
+
+        res.json(formattedHistory);
+    } catch (error) {
+        console.error("Error fetching driver history:", error);
+        res.status(500).json({ message: "Server error" });
+    }
 };
