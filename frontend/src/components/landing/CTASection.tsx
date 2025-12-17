@@ -3,12 +3,16 @@ import Link from 'next/link';
 
 const CTASection = () => {
   return (
-    <section className="bg-brown-900 py-20">
-      <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-4">Ready to Take Control of Your Fuel Costs?</h2>
-        <p className="text-xl mb-8">Join FuelOps today and start optimizing your operations.</p>
-        <Link href="/register" className="bg-amber-800 hover:bg-amber-900 text-white font-bold py-2 px-4 rounded">
-          Sign Up Now
+    <section className="bg-primary text-primary-foreground">
+      <div className="container mx-auto text-center py-20">
+        <h2 className="text-4xl font-extrabold mb-4">
+          Ready to Revolutionize Your Fuel Management?
+        </h2>
+        <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+          Join FuelOps today and unlock a world of efficiency, savings, and control over your fleet's fuel consumption.
+        </p>
+        <Link href="/register" className="bg-card text-foreground hover:bg-card/90 font-bold py-4 px-8 rounded-lg text-lg transition-transform transform hover:scale-105">
+            Start Your Free Trial
         </Link>
       </div>
     </section>
