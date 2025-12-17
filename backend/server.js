@@ -10,9 +10,16 @@ const port = 3001;
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 
+import driverRoutes from './routes/driverRoutes.js';
+
+// ... existing code ...
+
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/stations', stationRoutes);
+app.use('/api/driver', driverRoutes);
+
+// ... existing code ...
 
 // A simple test endpoint to check if the server is running
 app.get('/api/health', (req, res) => {

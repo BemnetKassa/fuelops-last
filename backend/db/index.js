@@ -48,7 +48,34 @@ export const stations = [
 ];
 
 // In-memory store for reservations
-export const reservations = [];
+export const reservations = [
+    {
+        id: 'res-1',
+        driverId: 'user-1671234567890', // Corresponds to a driver
+        stationId: 'station-2',
+        liters: 15,
+        status: 'active', // 'active' | 'expired' | 'completed'
+        createdAt: new Date(Date.now() - 10 * 60 * 1000), // 10 minutes ago
+        expiresAt: new Date(Date.now() + 20 * 60 * 1000), // 20 minutes from now
+    }
+];
 
 // In-memory store for fuel records/transactions
-export const fuelRecords = [];
+export const fuelRecords = [
+    {
+        id: 'rec-1',
+        driverId: 'user-1671234567890',
+        stationId: 'station-1',
+        liters: 18,
+        status: 'completed',
+        date: '2025-12-16T10:00:00Z',
+    },
+    {
+        id: 'rec-2',
+        driverId: 'user-1671234567890',
+        stationId: 'station-4',
+        liters: 20,
+        status: 'completed',
+        date: '2025-12-15T14:30:00Z',
+    },
+];

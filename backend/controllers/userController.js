@@ -1,4 +1,4 @@
-const users = []; // In-memory user store for now
+import { users } from '../db/index.js';
 
 const registerUser = (req, res) => {
   const { name, email, password, phone, role, licensePlate, drivingLicenseId } = req.body;
@@ -19,7 +19,7 @@ const registerUser = (req, res) => {
   }
 
   const user = {
-    id: Date.now().toString(),
+    id: `user-${Date.now()}`,
     name,
     email,
     password, // In a real app, you should hash this
@@ -27,6 +27,13 @@ const registerUser = (req, res) => {
     role,
     licensePlate,
     drivingLicenseId,
+    // Add driver-specific properties
+    accountStatus: 'active', // 'active' | 'suspended'
+    fuelType: 'Petrol', // 'Petrol' | 'Diesel'
+    dailyQuota: {
+      max: 20, // liters
+      current: 20,
+    },
   };
 
   users.push(user);
@@ -39,8 +46,6 @@ const registerUser = (req, res) => {
     email: user.email,
     phone: user.phone,
     role: user.role,
-    licensePlate: user.licensePlate,
-    drivingLicenseId: user.drivingLicenseId,
   });
 };
 
