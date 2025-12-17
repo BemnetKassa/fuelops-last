@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
+import stationRoutes from './routes/stationRoutes.js';
 
 const app = express();
 const port = 3001;
@@ -11,6 +12,7 @@ app.use(express.json()); // Middleware to parse JSON bodies
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/stations', stationRoutes);
 
 // A simple test endpoint to check if the server is running
 app.get('/api/health', (req, res) => {
