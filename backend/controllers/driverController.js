@@ -1,14 +1,14 @@
 import { prisma } from '../db/prisma.js';
 
 // @desc    Get driver dashboard data
-// @route   GET /api/driver/dashboard
+// @route   GET /api/driver/dashboard/:userId
 // @access  Private
 export const getDriverDashboard = async (req, res) => {
-  // In a real app, you'd get the driverId from an authenticated session (e.g., JWT)
-  // For now, we'll simulate fetching data for the first registered user if they are a driver.
+  const { userId } = req.params;
+
   try {
-    const driverUser = await prisma.user.findFirst({
-      where: { role: 'DRIVER' },
+    const driverUser = await prisma.user.findUnique({
+      where: { id: userId, role: 'DRIVER' },
       include: {
         driverProfile: true,
         vehicles: true,
@@ -27,7 +27,7 @@ export const getDriverDashboard = async (req, res) => {
     });
 
     if (!driverUser || !driverUser.driverProfile) {
-      return res.status(404).json({ message: 'No driver found or driver profile is incomplete.' });
+      return res.status(404).json({ message: 'Driver not found or driver profile is incomplete.' });
     }
 
     const activeReservation = driverUser.reservations[0];
@@ -58,17 +58,18 @@ export const getDriverDashboard = async (req, res) => {
 };
 
 // @desc    Get driver transaction history
-// @route   GET /api/driver/history
+// @route   GET /api/driver/history/:userId
 // @access  Private
 export const getDriverHistory = async (req, res) => {
-    // Using the same logic to find the first driver for now
+    const { userId } = req.params;
+
     try {
-        const driverUser = await prisma.user.findFirst({
-            where: { role: 'DRIVER' },
+        const driverUser = await prisma.user.findUnique({
+            where: { id: userId, role: 'DRIVER' },
         });
 
         if (!driverUser) {
-            return res.status(404).json({ message: 'No driver found.' });
+            return res.status(404).json({ message: 'Driver not found.' });
         }
 
         const history = await prisma.fuelRecord.findMany({

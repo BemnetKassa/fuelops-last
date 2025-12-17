@@ -38,10 +38,17 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // In a real app, the driver ID would come from the auth context
-        const res = await fetch('http://localhost:3001/api/driver/dashboard');
+        // In a real app, the driver ID would come from a proper auth context/session
+        // For now, we'll simulate it by getting it from localStorage
+        const user = JSON.parse(localStorage.getItem('fuelops-user') || '{}');
+        if (!user || !user.id) {
+          throw new Error('No user found. Please log in.');
+        }
+
+        const res = await fetch(`http://localhost:3001/api/driver/dashboard/${user.id}`);
         if (!res.ok) {
-          throw new Error('Failed to fetch dashboard data');
+          const errorData = await res.json();
+          throw new Error(errorData.message || 'Failed to fetch dashboard data');
         }
         const result = await res.json();
         setData(result);

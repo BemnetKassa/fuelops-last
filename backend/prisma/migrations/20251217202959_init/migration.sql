@@ -57,7 +57,12 @@ CREATE TABLE `FuelRecord` (
     `liters` DOUBLE NOT NULL,
     `amount` DOUBLE NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
-    `stationId` VARCHAR(191) NOT NULL,
+    `stationId` VARCHAR(191) NOT NULL,Backend server listening at http://localhost:3001
+prisma:query SELECT `fuelps`.`User`.`id`, `fuelps`.`User`.`email`, `fuelps`.`User`.`password`, `fuelps`.`User`.`role`, `fuelps`.`User`.`createdAt`, `fuelps`.`User`.`updatedAt` FROM `fuelps`.`User` WHERE `fuelps`.`User`.`role` = ? LIMIT ? OFFSET ?  
+prisma:query SELECT 1
+prisma:query SELECT `fuelps`.`User`.`id`, `fuelps`.`User`.`email`, `fuelps`.`User`.`password`, `fuelps`.`User`.`role`, `fuelps`.`User`.`createdAt`, `fuelps`.`User`.`updatedAt` FROM `fuelps`.`User` WHERE `fuelps`.`User`.`role` = ? LIMIT ? OFFSET ?  
+prisma:query SELECT `fuelps`.`User`.`id`, `fuelps`.`User`.`email`, `fuelps`.`User`.`password`, `fuelps`.`User`.`role`, `fuelps`.`User`.`createdAt`, `fuelps`.`User`.`updatedAt` FROM `fuelps`.`User` WHERE `fuelps`.`User`.`role` = ? LIMIT ? OFFSET ?  
+
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
