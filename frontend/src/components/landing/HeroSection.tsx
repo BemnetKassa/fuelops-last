@@ -14,7 +14,7 @@ const HeroSection = () => {
         <p className="text-2xl mb-10 font-light">
           The ultimate platform for seamless fuel tracking and management.
         </p>
-        <Link href="/register" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-lg text-lg transition-transform transform hover:scale-105">
+        <Link href="/register" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 px-8 rounded-lg text-lg btn-grow">
             Join the Revolution
         </Link>
       </div>
