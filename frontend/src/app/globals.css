@@ -70,15 +70,15 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(99.5% 0.003 240); /* Near-white */
+  --background: oklch(94.481% 0.03427 67.326); /* Near-white */
   --foreground: oklch(15% 0.01 240); /* Dark gray for text */
   --card: oklch(100% 0 0); /* Pure white for cards */
   --card-foreground: oklch(15% 0.01 240);
   --popover: oklch(100% 0 0);
   --popover-foreground: oklch(15% 0.01 240);
-  --primary: oklch(45% 0.16 40); /* A professional, deep brown/orange */
+  --primary: oklch(72.151% 0.18487 46.046 / 0.473); /* A professional, deep brown/orange */
   --primary-foreground: oklch(98% 0.01 40); /* Light color for text on primary */
-  --secondary: oklch(90% 0.04 45); /* Lighter, supporting color */
+  --secondary: oklch(85.799% 0.08275 45.774); /* Lighter, supporting color */
   --secondary-foreground: oklch(30% 0.08 45); /* Darker text for secondary */
   --muted: oklch(96% 0.005 240); /* Very light gray for subtle backgrounds */
   --muted-foreground: oklch(55% 0.01 240); /* Medium gray for less important text */
