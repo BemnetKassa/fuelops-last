@@ -9,8 +9,8 @@ const Navbar = () => {
           FuelOps
         </Link>
         <div>
-          <Link href="/login" className="mr-4">Login</Link>
-          <Link href="/register">Register</Link>
+          <Link href="/login" className="mr-4 hover:text-white/60">Login</Link>
+          <Link href="/register" className="hover:text-white/60 ">Register</Link>
         </div>
       </nav>
     </header>

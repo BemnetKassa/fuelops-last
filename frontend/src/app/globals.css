@@ -78,7 +78,7 @@
   --popover-foreground: oklch(15% 0.01 240);
   --primary: oklch(72.151% 0.18487 46.046 / 0.473); /* A professional, deep brown/orange */
   --primary-foreground: oklch(98% 0.01 40); /* Light color for text on primary */
-  --secondary: oklch(85.799% 0.08275 45.774); /* Lighter, supporting color */
+  --secondary: oklch(59.818% 0.08389 43.656); /* Lighter, supporting color */
   --secondary-foreground: oklch(30% 0.08 45); /* Darker text for secondary */
   --muted: oklch(96% 0.005 240); /* Very light gray for subtle backgrounds */
   --muted-foreground: oklch(55% 0.01 240); /* Medium gray for less important text */
