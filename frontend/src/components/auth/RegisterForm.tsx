@@ -12,7 +12,7 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const role = 'driver'; // Set role to driver for public registration
+    const role = 'DRIVER'; // Set role to driver for public registration
     try {
       const res = await fetch('http://localhost:3001/api/users/register', {
         method: 'POST',

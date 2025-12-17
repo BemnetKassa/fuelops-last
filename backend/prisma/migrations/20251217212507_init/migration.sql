@@ -1,13 +1,16 @@
 -- CreateTable
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
+    `phone` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
     `role` ENUM('DRIVER', 'OWNER', 'ADMIN', 'STATION_ATTENDANT') NOT NULL DEFAULT 'DRIVER',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
+    UNIQUE INDEX `User_phone_key`(`phone`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -57,12 +60,7 @@ CREATE TABLE `FuelRecord` (
     `liters` DOUBLE NOT NULL,
     `amount` DOUBLE NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
-    `stationId` VARCHAR(191) NOT NULL,Backend server listening at http://localhost:3001
-prisma:query SELECT `fuelps`.`User`.`id`, `fuelps`.`User`.`email`, `fuelps`.`User`.`password`, `fuelps`.`User`.`role`, `fuelps`.`User`.`createdAt`, `fuelps`.`User`.`updatedAt` FROM `fuelps`.`User` WHERE `fuelps`.`User`.`role` = ? LIMIT ? OFFSET ?  
-prisma:query SELECT 1
-prisma:query SELECT `fuelps`.`User`.`id`, `fuelps`.`User`.`email`, `fuelps`.`User`.`password`, `fuelps`.`User`.`role`, `fuelps`.`User`.`createdAt`, `fuelps`.`User`.`updatedAt` FROM `fuelps`.`User` WHERE `fuelps`.`User`.`role` = ? LIMIT ? OFFSET ?  
-prisma:query SELECT `fuelps`.`User`.`id`, `fuelps`.`User`.`email`, `fuelps`.`User`.`password`, `fuelps`.`User`.`role`, `fuelps`.`User`.`createdAt`, `fuelps`.`User`.`updatedAt` FROM `fuelps`.`User` WHERE `fuelps`.`User`.`role` = ? LIMIT ? OFFSET ?  
-
+    `stationId` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
