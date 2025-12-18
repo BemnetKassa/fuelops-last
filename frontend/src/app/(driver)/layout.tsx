@@ -2,11 +2,19 @@
 "use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, Fuel, History, Bell, User, LogOut } from 'lucide-react';
 
 const DriverLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem('fuelops-user');
+    // Redirect to the login page
+    router.push('/');
+  };
 
   const navLinks = [
     { name: 'Dashboard', path: '/driver/dashboard', icon: LayoutDashboard },
@@ -39,7 +47,10 @@ const DriverLayout = ({ children }: { children: React.ReactNode }) => {
           ))}
         </nav>
         <div>
-          <button className="flex items-center w-full px-4 py-3 text-lg font-medium rounded-lg text-red-500 hover:bg-red-500/10">
+          <button 
+            onClick={handleLogout}
+            className="flex items-center w-full px-4 py-3 text-lg font-medium rounded-lg text-red-500 hover:bg-red-500/10"
+          >
             <LogOut className="mr-3 h-6 w-6" />
             Logout
           </button>

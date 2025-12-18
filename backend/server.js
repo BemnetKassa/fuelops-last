@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import stationRoutes from './routes/stationRoutes.js';
+import reservationRoutes from './routes/reservationRoutes.js';
 
 const app = express();
 const port = 3001;
@@ -18,6 +19,7 @@ import driverRoutes from './routes/driverRoutes.js';
 app.use('/api/users', userRoutes);
 app.use('/api/stations', stationRoutes);
 app.use('/api/driver', driverRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 // ... existing code ...
 

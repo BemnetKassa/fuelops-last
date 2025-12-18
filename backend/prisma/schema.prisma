@@ -70,16 +70,16 @@ model FuelRecord {
 }
 
 model Reservation {
-  id        String            @id @default(cuid())
-  liters    Int
-  status    ReservationStatus @default(PENDING)
-  expiresAt DateTime
-  userId    String
-  user      User              @relation(fields: [userId], references: [id])
-  stationId String
-  station   Station           @relation(fields: [stationId], references: [id])
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  id         String            @id @default(cuid())
+  fuelAmount Float
+  status     ReservationStatus @default(PENDING)
+  expiresAt  DateTime
+  driverId   String
+  driver     User              @relation(fields: [driverId], references: [id])
+  stationId  String
+  station    Station           @relation(fields: [stationId], references: [id])
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
 }
 
 enum Role {
