@@ -50,7 +50,7 @@ const HistoryPage = () => {
   const fetchHistory = async (driverId: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/driver/${driverId}/history`);
+      const res = await fetch(`http://localhost:3001/api/driver/history/${driverId}`);
       if (res.ok) {
         const data = await res.json();
         setRecords(data.fuelRecords);

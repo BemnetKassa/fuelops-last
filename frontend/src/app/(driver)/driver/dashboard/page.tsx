@@ -65,11 +65,10 @@ const DashboardPage = () => {
   if (loading) {
     return (
       <div>
-        <h1 className="text-3xl font-bold mb-6">Driver Dashboard</h1>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <Skeleton className="h-36" />
-          <Skeleton className="h-36" />
-          <Skeleton className="h-36" />
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Skeleton className="h-40 rounded-lg" />
+          <Skeleton className="h-40 rounded-lg" />
+          <Skeleton className="h-40 rounded-lg" />
         </div>
       </div>
     );
@@ -77,26 +76,19 @@ const DashboardPage = () => {
 
   if (error) {
     return (
-      <div>
-        <h1 className="text-3xl font-bold mb-6">Driver Dashboard</h1>
-        <div className="text-red-500">Error: {error}</div>
+      <div className="text-red-500 bg-red-500/10 p-4 rounded-lg">
+        <strong>Error:</strong> {error}
       </div>
     );
   }
 
   if (!data) {
-    return (
-      <div>
-        <h1 className="text-3xl font-bold mb-6">Driver Dashboard</h1>
-        <p>No dashboard data available.</p>
-      </div>
-    );
+    return <p>No dashboard data available.</p>;
   }
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-6">Driver Dashboard</h1>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <DailyQuotaCard remaining={data.dailyQuota.remaining} total={data.dailyQuota.total} />
         <AccountStatusCard
           status={data.accountStatus.status}

@@ -43,14 +43,14 @@ const ActiveReservationCard = ({ reservation }: ActiveReservationCardProps) => {
 
   if (!reservation) {
     return (
-      <Card>
+      <Card className="bg-card text-card-foreground h-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Active Reservation</CardTitle>
-          <Timer className="h-4 w-4 text-muted-foreground" />
+          <Timer className="h-5 w-5 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">No Active Reservation</div>
-          <p className="text-xs text-muted-foreground">
+          <div className="text-2xl font-bold">No Reservation</div>
+          <p className="text-xs text-muted-foreground mt-1">
             Reserve fuel from a nearby station.
           </p>
         </CardContent>
@@ -59,22 +59,25 @@ const ActiveReservationCard = ({ reservation }: ActiveReservationCardProps) => {
   }
 
   return (
-    <Card className="bg-blue-50 border-blue-200 dark:bg-blue-950 dark:border-blue-800">
+    <Card className="bg-primary/10 border-primary/20 text-primary-foreground h-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-blue-800 dark:text-blue-300">Active Reservation</CardTitle>
-        <Timer className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+        <CardTitle className="text-sm font-medium text-primary">Active Reservation</CardTitle>
+        <Timer className="h-5 w-5 text-primary" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-blue-900 dark:text-blue-200">
-          Expires in {timeLeft}
+        <div className="text-3xl font-bold text-primary">
+          {timeLeft}
         </div>
-        <div className="mt-4 space-y-2 text-sm text-blue-700 dark:text-blue-300">
-          <div className="flex items-center">
-            <Building className="mr-2 h-4 w-4" />
+        <p className="text-xs text-primary/80 mt-1">
+          Expires in
+        </p>
+        <div className="mt-4 space-y-2 text-sm text-primary/90">
+          <div className="flex items-center gap-2">
+            <Building className="h-4 w-4" />
             <span>{reservation.stationName}</span>
           </div>
-          <div className="flex items-center">
-            <Fuel className="mr-2 h-4 w-4" />
+          <div className="flex items-center gap-2">
+            <Fuel className="h-4 w-4" />
             <span>{reservation.liters} liters reserved</span>
           </div>
         </div>

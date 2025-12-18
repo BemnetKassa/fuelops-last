@@ -11,26 +11,20 @@ interface DailyQuotaCardProps {
 const DailyQuotaCard = ({ remaining, total }: DailyQuotaCardProps) => {
   const percentage = total > 0 ? (remaining / total) * 100 : 0;
 
-  const getProgressColor = () => {
-    if (percentage < 25) return 'bg-red-500';
-    if (percentage < 50) return 'bg-yellow-500';
-    return 'bg-green-500';
-  };
-
   return (
-    <Card>
+    <Card className="bg-card text-card-foreground h-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">Daily Fuel Quota</CardTitle>
-        <Droplets className="h-4 w-4 text-muted-foreground" />
+        <Droplets className="h-5 w-5 text-muted-foreground" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">
-          {remaining} / {total} <span className="text-sm text-muted-foreground">liters</span>
+        <div className="text-3xl font-bold">
+          {remaining}<span className="text-xl text-muted-foreground">/{total}L</span>
         </div>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground mt-1">
           {total - remaining} liters used today
         </p>
-        <Progress value={percentage} className="mt-4 h-2" indicatorClassName={getProgressColor()} />
+        <Progress value={percentage} className="mt-4 h-3" />
       </CardContent>
     </Card>
   );
