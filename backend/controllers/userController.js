@@ -1,4 +1,4 @@
-import { prisma } from '../db/prisma.js';
+import prisma from '../db/prisma.js';
 import bcrypt from 'bcryptjs';
 
 const registerUser = async (req, res) => {

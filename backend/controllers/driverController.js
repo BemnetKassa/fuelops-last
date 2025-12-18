@@ -1,4 +1,4 @@
-import { prisma } from '../db/prisma.js';
+import prisma from '../db/prisma.js';
 
 // @desc    Get driver dashboard data
 // @route   GET /api/driver/dashboard/:userId
@@ -45,7 +45,7 @@ export const getDriverDashboard = async (req, res) => {
       },
       activeReservation: activeReservation ? {
         stationName: activeReservation.station.name,
-        liters: activeReservation.liters,
+        fuelAmount: activeReservation.fuelAmount,
         expiresAt: activeReservation.expiresAt.toISOString(),
       } : null,
     };
@@ -72,7 +72,7 @@ export const getDriverHistory = async (req, res) => {
             return res.status(404).json({ message: 'Driver not found.' });
         }
 
-        const history = await prisma.fuelRecord.findMany({
+        const fuelRecords = await prisma.fuelRecord.findMany({
             where: { userId: driverUser.id },
             include: {
                 station: {
@@ -84,15 +84,17 @@ export const getDriverHistory = async (req, res) => {
             }
         });
 
-        const formattedHistory = history.map(record => ({
-            id: record.id,
-            stationName: record.station.name,
-            liters: record.liters,
-            amount: record.amount,
-            date: record.createdAt.toISOString(),
-        }));
+        const reservations = await prisma.reservation.findMany({
+            where: { driverId: userId },
+            orderBy: { createdAt: 'desc' },
+            include: {
+                station: {
+                select: { name: true },
+                },
+            },
+        });
 
-        res.json(formattedHistory);
+        res.json({ fuelRecords, reservations });
     } catch (error) {
         console.error("Error fetching driver history:", error);
         res.status(500).json({ message: "Server error" });
