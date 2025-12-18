@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -9,9 +10,12 @@ const RegisterForm = () => {
   const [phone, setPhone] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
   const [drivingLicenseId, setDrivingLicenseId] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     const role = 'DRIVER'; // Set role to driver for public registration
     try {
       const res = await fetch('http://localhost:3001/api/users/register', {
@@ -25,20 +29,28 @@ const RegisterForm = () => {
       if (res.ok) {
         const data = await res.json();
         console.log('Registration successful:', data);
-        // TODO: Redirect to login or dashboard
+        // Save user data to localStorage
+        localStorage.setItem('fuelops-user', JSON.stringify(data));
+        // Redirect to driver dashboard
+        router.push('/driver/dashboard');
       } else {
         const errorData = await res.json();
         console.error('Registration failed:', errorData.message);
-        // TODO: Display error message to the user
+        setError(errorData.message || 'Registration failed. Please try again.');
       }
     } catch (error) {
       console.error('An error occurred:', error);
-      // TODO: Display a generic error message
+      setError('An unexpected error occurred. Please try again.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-sm mx-auto">
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <span className="block sm:inline">{error}</span>
+        </div>
+      )}
       <div>
         <label
           htmlFor="name"
