@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     try {
       const res = await fetch('http://localhost:3001/api/users/login', {
         method: 'POST',
@@ -20,20 +24,28 @@ const LoginForm = () => {
       if (res.ok) {
         const data = await res.json();
         console.log('Login successful:', data);
-        // TODO: Handle successful login (e.g., save token, redirect)
+        // Save user data to localStorage
+        localStorage.setItem('fuelops-user', JSON.stringify(data));
+        // Redirect to driver dashboard
+        router.push('/driver/dashboard');
       } else {
         const errorData = await res.json();
         console.error('Login failed:', errorData.message);
-        // TODO: Display error message to the user
+        setError(errorData.message || 'Login failed. Please check your credentials.');
       }
     } catch (error) {
       console.error('An error occurred during login:', error);
-      // TODO: Display a generic error message
+      setError('An unexpected error occurred. Please try again.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-sm mx-auto">
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <span className="block sm:inline">{error}</span>
+        </div>
+      )}
       <div>
         <label
           htmlFor="phone"
