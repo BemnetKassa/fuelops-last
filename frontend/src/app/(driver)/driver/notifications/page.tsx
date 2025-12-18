@@ -22,51 +22,48 @@ const NotificationsPage = () => {
   };
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-3xl font-bold">Notifications</h1>
-      <Card>
-        <CardHeader>
-          <CardTitle>Your Recent Alerts</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {notifications.map((notification) => (
-              <div
-                key={notification.id}
-                className={`p-4 rounded-md flex items-start gap-4 ${
-                  notification.read ? 'bg-muted/50 text-muted-foreground' : 'bg-card border'
-                }`}
-              >
-                <div className="mt-1">
-                  {notification.read ? (
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                  ) : (
-                    <Bell className="h-5 w-5 text-primary" />
-                  )}
-                </div>
-                <div className="flex-1">
-                  <p className={`font-medium ${notification.read ? '' : 'text-foreground'}`}>
-                    {notification.message}
-                  </p>
-                  <p className="text-sm mt-1">{notification.time}</p>
-                </div>
-                {!notification.read && (
-                  <button
-                    onClick={() => markAsRead(notification.id)}
-                    className="text-sm text-primary hover:underline"
-                  >
-                    Mark as read
-                  </button>
+    <Card>
+      <CardHeader>
+        <CardTitle>Your Recent Alerts</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {notifications.map((notification) => (
+            <div
+              key={notification.id}
+              className={`p-4 rounded-md flex items-start gap-4 ${
+                notification.read ? 'bg-muted/50 text-muted-foreground' : 'bg-card border'
+              }`}
+            >
+              <div className="mt-1">
+                {notification.read ? (
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                ) : (
+                  <Bell className="h-5 w-5 text-primary" />
                 )}
               </div>
-            ))}
-            {notifications.length === 0 && (
-              <p>You have no new notifications.</p>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+              <div className="flex-1">
+                <p className={`font-medium ${notification.read ? '' : 'text-foreground'}`}>
+                  {notification.message}
+                </p>
+                <p className="text-sm mt-1">{notification.time}</p>
+              </div>
+              {!notification.read && (
+                <button
+                  onClick={() => markAsRead(notification.id)}
+                  className="text-sm text-primary hover:underline"
+                >
+                  Mark as read
+                </button>
+              )}
+            </div>
+          ))}
+          {notifications.length === 0 && (
+            <p>You have no new notifications.</p>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

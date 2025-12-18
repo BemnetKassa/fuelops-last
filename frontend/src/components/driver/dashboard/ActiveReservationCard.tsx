@@ -17,6 +17,11 @@ interface ActiveReservationCardProps {
 
 const ActiveReservationCard = ({ reservation }: ActiveReservationCardProps) => {
   const [timeLeft, setTimeLeft] = useState('');
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (!reservation) return;
@@ -66,7 +71,7 @@ const ActiveReservationCard = ({ reservation }: ActiveReservationCardProps) => {
       </CardHeader>
       <CardContent>
         <div className="text-3xl font-bold text-primary">
-          {timeLeft}
+          {isClient ? timeLeft : ''}
         </div>
         <p className="text-xs text-primary/80 mt-1">
           Expires in

@@ -94,17 +94,15 @@ const HistoryPage = () => {
   }
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-3xl font-bold">Transaction History</h1>
-      <Tabs defaultValue="fuel-records" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="fuel-records">Fuel Records</TabsTrigger>
-          <TabsTrigger value="reservations">Reservations</TabsTrigger>
-        </TabsList>
-        <TabsContent value="fuel-records">
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Fuel Purchases</CardTitle>
+    <Tabs defaultValue="fuel-records" className="w-full">
+      <TabsList className="grid w-full grid-cols-2 mb-4">
+        <TabsTrigger value="fuel-records">Fuel Records</TabsTrigger>
+        <TabsTrigger value="reservations">Reservations</TabsTrigger>
+      </TabsList>
+      <TabsContent value="fuel-records">
+        <Card>
+          <CardHeader>
+            <CardTitle>Fuel Purchase History</CardTitle>
             </CardHeader>
             <CardContent>
               <ScrollArea className="h-[60vh]">
@@ -162,9 +160,8 @@ const HistoryPage = () => {
             </CardContent>
           </Card>
         </TabsContent>
-      </Tabs>
-    </div>
-  );
+        </Tabs>
+  );        
 };
 
 export default HistoryPage;

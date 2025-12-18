@@ -67,37 +67,35 @@ const ReserveFuelPage = () => {
   };
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-3xl font-bold">Reserve Fuel</h1>
-      <Card className="max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle>Create a New Fuel Reservation</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{error}</div>}
-            {success && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{success}</div>}
-            
-            <div className="space-y-2">
-              <Label htmlFor="station">Fuel Station</Label>
-              <Select onValueChange={setStationId} value={stationId}>
-                <SelectTrigger id="station">
-                  <SelectValue placeholder="Select a station" />
-                </SelectTrigger>
-                <SelectContent>
-                  {mockStations.map((station) => (
-                    <SelectItem key={station.id} value={station.id}>
-                      {station.name} ({station.distance})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+    <Card className="max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle>Create a New Fuel Reservation</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{error}</div>}
+          {success && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{success}</div>}
+          
+          <div className="space-y-2">
+            <Label htmlFor="station">Fuel Station</Label>
+            <Select onValueChange={setStationId} value={stationId}>
+              <SelectTrigger id="station">
+                <SelectValue placeholder="Select a station" />
+              </SelectTrigger>
+              <SelectContent>
+                {mockStations.map((station) => (
+                  <SelectItem key={station.id} value={station.id}>
+                    {station.name} ({station.distance})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="amount">Fuel Amount (in Liters)</Label>
-              <Input
-                id="amount"
+          <div className="space-y-2">
+            <Label htmlFor="amount">Fuel Amount (in Liters)</Label>
+            <Input
+              id="amount"
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
@@ -113,7 +111,6 @@ const ReserveFuelPage = () => {
           </form>
         </CardContent>
       </Card>
-    </div>
   );
 };
 

@@ -11,6 +11,12 @@ interface DailyQuotaCardProps {
 const DailyQuotaCard = ({ remaining, total }: DailyQuotaCardProps) => {
   const percentage = total > 0 ? (remaining / total) * 100 : 0;
 
+  const getProgressColor = () => {
+    if (percentage < 25) return 'bg-red-500';
+    if (percentage < 50) return 'bg-yellow-500';
+    return 'bg-green-500';
+  };
+
   return (
     <Card className="bg-card text-card-foreground h-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
