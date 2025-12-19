@@ -3,6 +3,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import stationRoutes from './routes/stationRoutes.js';
 import reservationRoutes from './routes/reservationRoutes.js';
+import driverRoutes from './routes/driverRoutes.js';
 
 const app = express();
 const port = 3001;
@@ -11,17 +12,11 @@ const port = 3001;
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 
-import driverRoutes from './routes/driverRoutes.js';
-
-// ... existing code ...
-
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/stations', stationRoutes);
 app.use('/api/driver', driverRoutes);
 app.use('/api/reservations', reservationRoutes);
-
-// ... existing code ...
 
 // A simple test endpoint to check if the server is running
 app.get('/api/health', (req, res) => {
