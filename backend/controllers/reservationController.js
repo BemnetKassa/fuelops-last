@@ -11,7 +11,7 @@ export const createReservation = async (req, res) => {
     // In a real application, you would also check station fuel availability
     // and lock the amount, but for now, we'll just create the reservation.
 
-    const reservation = await prisma.fuelReservation.create({
+    const reservation = await prisma.reservation.create({
       data: {
         driverId,
         stationId,
