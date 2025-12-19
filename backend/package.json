@@ -4,12 +4,15 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "db:seed": "prisma db seed"
+    "dev": "nodemon server.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
   },
+  "keywords": [],
+  "author": "",
   "dependencies": {
     "@prisma/client": "^5.15.0",
     "bcryptjs": "^2.4.3",
