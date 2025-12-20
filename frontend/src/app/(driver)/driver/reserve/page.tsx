@@ -7,16 +7,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-// Mock data for stations - in a real app, this would be fetched from an API
-const mockStations = [
-  { id: '1', name: 'Central Fueling Station', distance: '2.5 km' },
-  { id: '2', name: 'Highway Gas Stop', distance: '5.1 km' },
-  { id: '3', name: 'Downtown Diesel', distance: '8.0 km' },
-];
+interface Station {
+  id: string;
+  name: string;
+  location: string;
+}
 
 const ReserveFuelPage = () => {
   const [amount, setAmount] = useState('');
   const [stationId, setStationId] = useState<string | undefined>(undefined);
+  const [stations, setStations] = useState<Station[]>([]);
   const [user, setUser] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -26,6 +26,21 @@ const ReserveFuelPage = () => {
     if (userData) {
       setUser(JSON.parse(userData));
     }
+
+    const fetchStations = async () => {
+      try {
+        const res = await fetch('http://localhost:3001/api/stations');
+        if (!res.ok) {
+          throw new Error('Failed to fetch stations');
+        }
+        const data = await res.json();
+        setStations(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+      }
+    };
+
+    fetchStations();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -83,9 +98,9 @@ const ReserveFuelPage = () => {
                 <SelectValue placeholder="Select a station" />
               </SelectTrigger>
               <SelectContent>
-                {mockStations.map((station) => (
+                {stations.map((station) => (
                   <SelectItem key={station.id} value={station.id}>
-                    {station.name} ({station.distance})
+                    {station.name} - <span className="text-muted-foreground">{station.location}</span>
                   </SelectItem>
                 ))}
               </SelectContent>

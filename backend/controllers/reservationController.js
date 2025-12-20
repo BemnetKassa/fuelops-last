@@ -8,6 +8,7 @@ export const createReservation = async (req, res) => {
   }
 
   try {
+    console.log(`Attempting to create reservation with stationId: ${stationId}`); // Debugging line
     // In a real application, you would also check station fuel availability
     // and lock the amount, but for now, we'll just create the reservation.
 
