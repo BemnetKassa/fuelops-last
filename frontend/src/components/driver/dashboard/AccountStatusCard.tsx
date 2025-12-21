@@ -24,7 +24,7 @@ const AccountStatusCard = ({ status, plateNumber, fuelType }: AccountStatusCardP
       </CardHeader>
       <CardContent>
         <div className="text-3xl font-bold">
-          <Badge variant={isSuspended ? 'destructive' : 'success'} className="capitalize text-lg">
+          <Badge variant={isSuspended ? 'destructive' : 'default'} className="capitalize text-lg">
             {status}
           </Badge>
         </div>
