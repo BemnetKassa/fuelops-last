@@ -1,8 +1,9 @@
 "use client"
 
 import { GripVertical } from "lucide-react"
-import { Panel as ResizablePrimitivePanel, PanelResizeHandle as ResizablePrimitivePanelResizeHandle } from "react-resizable-panels"
 const ResizablePrimitivePanelGroup = (require("react-resizable-panels") as any).PanelGroup
+const ResizablePrimitivePanel = (require("react-resizable-panels") as any).Panel
+const ResizablePrimitivePanelResizeHandle = (require("react-resizable-panels") as any).PanelResizeHandle
 
 import { cn } from "@/lib/utils"
 
