@@ -12,7 +12,7 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-}); 
+});
 
 export const metadata: Metadata = {
   title: "FuelOps",
@@ -25,11 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-full`}
       >
-        {children}
+        <Navbar />
+        <main className="flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );
