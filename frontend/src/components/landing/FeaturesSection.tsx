@@ -8,7 +8,16 @@ const cardVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const FeatureCard = ({ icon, title, children, index }) => (
+import { ReactNode } from 'react';
+
+interface FeatureCardProps {
+  icon: ReactNode;
+  title: string;
+  children: ReactNode;
+  index: number;
+}
+
+const FeatureCard = ({ icon, title, children, index }: FeatureCardProps) => (
   <motion.div
     className="bg-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-border/20 overflow-hidden"
     variants={cardVariants}
@@ -65,7 +74,7 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-card/20">
+    <section className="py-24 bg-linear-to-b from-background to-card/20">
       <div className="container mx-auto text-center">
         <motion.h2
           className="text-5xl font-extrabold mb-6 tracking-tight text-foreground"
