@@ -46,10 +46,10 @@ const HowItWorks = () => {
         transition: 'background-image 0.5s ease',
       }}
     >
-      <div className="absolute inset-0 bg-secondary/80 pointer-events-none" />
+      <div className="absolute inset-0 bg-secondary/20 pointer-events-none" />
       <div className="container mx-auto text-center relative z-10">
         <motion.h2
-          className="text-5xl font-extrabold mb-6 tracking-tight text-secondary-foreground"
+          className="text-5xl font-extrabold mb-6 tracking-tight text-white"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -58,7 +58,7 @@ const HowItWorks = () => {
           How It Works
         </motion.h2>
         <motion.p
-          className="text-secondary-foreground/80 mb-16 text-xl"
+          className="text-white mb-16 text-xl"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -70,7 +70,7 @@ const HowItWorks = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={steps[current].title}
-              className="flex flex-col items-center bg-background p-12 rounded-3xl shadow-2xl border-2 border-border/30"
+              className="flex flex-col items-center bg-background p-12 rounded-3xl shadow-2xl border-2 border-border/30 transition-transform duration-300 hover:scale-105 hover:shadow-3xl hover:border-primary/60 cursor-pointer"
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
