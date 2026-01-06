@@ -29,7 +29,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   cards,
   backgroundColor = "bg-background",
   cardHeight = "60vh",
-  animationDuration = "0.5s",
+  animationDuration = "0.4s",
   sectionHeightMultiplier = 3,
   intersectionThreshold = 0.1,
   className = "",

@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import userRoutes from './routes/userRoutes.js';
-import stationRoutes from './routes/stationRoutes.js';
-import reservationRoutes from './routes/reservationRoutes.js';
-import driverRoutes from './routes/driverRoutes.js';
+import userRoutes from './src/routes/userRoutes.js';
+import stationRoutes from './src/routes/stationRoutes.js';
+import reservationRoutes from './src/routes/reservationRoutes.js';
+import driverRoutes from './src/routes/driverRoutes.js';
 
 const app = express();
 const port = 3001;
