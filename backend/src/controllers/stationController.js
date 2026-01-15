@@ -1,4 +1,4 @@
-import prisma from '../db/prisma.js';
+// ...existing code...
 
 // @desc    Get all stations
 // @route   GET /api/stations

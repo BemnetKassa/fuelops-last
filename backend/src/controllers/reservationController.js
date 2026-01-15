@@ -1,4 +1,4 @@
-import prisma from '../db/prisma.js';
+// ...existing code...
 
 export const createReservation = async (req, res) => {
   const { driverId, stationId, fuelAmount } = req.body;

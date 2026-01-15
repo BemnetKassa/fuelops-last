@@ -1,4 +1,4 @@
-import prisma from '../db/prisma.js';
+// Removed Prisma import
 import bcrypt from 'bcryptjs';
 
 const registerUser = async (req, res) => {
@@ -14,6 +14,8 @@ const registerUser = async (req, res) => {
 
   try {
     const userExists = await prisma.user.findUnique({ where: { email } });
+      // TODO: Replace with raw SQL or other DB logic
+      const userExists = false; // Placeholder
 
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
@@ -22,31 +24,8 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        phone,
-        role,
-        driverProfile: {
-          create: {
-            // Default values are set in the schema
-          },
-        },
-        vehicles: {
-          create: {
-            plateNumber: licensePlate,
-            // You might want to add a way to specify fuel type on registration
-            fuelType: 'PETROL', 
-          },
-        },
-      },
-      include: {
-        driverProfile: true,
-        vehicles: true,
-      },
-    });
+    // TODO: Replace with raw SQL or other DB logic
+    const user = { name, email, password: hashedPassword, phone, role, licensePlate, drivingLicenseId }; // Placeholder
 
     res.status(201).json({
       id: user.id,

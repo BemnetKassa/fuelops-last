@@ -1,4 +1,4 @@
-import prisma from '../db/prisma.js';
+// ...existing code...
 
 // @desc    Get driver dashboard data
 // @route   GET /api/driver/dashboard/:userId
