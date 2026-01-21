@@ -10,13 +10,24 @@ export default function StationLoginPage() {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        // replace this with your real authentication logic 
-        if (stationId === 'station001' && password === 'stationpass') {
-            // set authentication (e.g., cookie, localStorage, context, etc.)
-            localStorage.setItem('station-auth', 'true');
-            router.push('/station/dashboard');
-        } else {
-            setError('Invalid credentials');
+        setError("");
+        try {
+            const res = await fetch("http://localhost:3001/api/stationadmin/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: stationId, password }),
+            });
+            if (res.ok) {
+                const data = await res.json();
+                // Set authentication (e.g., cookie, localStorage, context, etc.)
+                localStorage.setItem('station-auth', 'true');
+                router.push('/station/dashboard');
+            } else {
+                const err = await res.json();
+                setError(err.message || 'Invalid credentials');
+            }
+        } catch (err) {
+            setError('Server error. Please try again later.');
         }
     };
 
