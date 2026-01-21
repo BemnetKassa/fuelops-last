@@ -13,9 +13,8 @@ const registerUser = async (req, res) => {
   }
 
   try {
-    const userExists = await prisma.user.findUnique({ where: { email } });
-      // TODO: Replace with raw SQL or other DB logic
-      const userExists = false; // Placeholder
+    // TODO: Replace with raw SQL or other DB logic
+    const userExists = false; // Placeholder
 
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
