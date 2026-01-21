@@ -3,7 +3,7 @@ import pkg from 'pg';
 const { Client } = pkg;
 
 const client = new Client({
-  connectionString: 'postgres://username:password@localhost:5432/yourdb', // update this
+  connectionString: 'postgresql://postgres.ixwtwjxjcgjrtnzbbznp:Bkbk123%21%40%23%28%29@aws-1-us-east-1.pooler.supabase.com:6543/postgres', // Supabase connection string
 });
 
 async function seed() {

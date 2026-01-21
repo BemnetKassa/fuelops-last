@@ -10,13 +10,24 @@ export default function AdminLoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Replace this with your real authentication logic
-    if (username === "admin" && password === "admin123") {
-      // Set authentication (e.g., cookie, localStorage, context, etc.)
-      localStorage.setItem("admin-auth", "true");
-      router.push("/admin/dashboard");
-    } else {
-      setError("Invalid credentials");
+    setError("");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: username, password }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        // You can store a token or set auth state here
+        localStorage.setItem("admin-auth", "true");
+        router.push("/admin/dashboard");
+      } else {
+        const err = await res.json();
+        setError(err.message || "Invalid credentials");
+      }
+    } catch (err) {
+      setError("Server error. Please try again later.");
     }
   };
 

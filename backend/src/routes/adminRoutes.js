@@ -1,6 +1,10 @@
+
 import express from 'express';
 import auth from '../middleware/auth.js';
+import { adminLogin } from '../controllers/adminController.js';
 const router = express.Router();
+// Admin login route
+router.post('/login', adminLogin);
 
 // Example protected admin route
 router.get('/dashboard', auth, (req, res) => {
