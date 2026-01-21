@@ -6,6 +6,7 @@ import stationRoutes from './src/routes/stationRoutes.js';
 import reservationRoutes from './src/routes/reservationRoutes.js';
 import driverRoutes from './src/routes/driverRoutes.js';
 import adminRoutes from './src/routes/adminRoutes.js';
+import stationAdminRoutes from './src/routes/stationAdminRoutes.js';
 
 const app = express();
 const port = 3001;
@@ -20,6 +21,7 @@ app.use('/api/stations', stationRoutes);
 app.use('/api/driver', driverRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/stationadmin', stationAdminRoutes);
 
 // A simple test endpoint to check if the server is running
 app.get('/api/health', (req, res) => {
