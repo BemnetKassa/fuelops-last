@@ -2,8 +2,16 @@ import bcrypt from 'bcryptjs';
 import pkg from 'pg';
 const { Client } = pkg;
 
+
 const client = new Client({
-  connectionString: process.env.DATABASE_URL || 'YOUR_SUPABASE_CONNECTION_STRING',
+  connectionString: process.env.DATABASE_URL || 'postgresql://postgres.ixwtwjxjcgjrtnzbbznp:Bkbk123%21%40%23%28%29@aws-1-us-east-1.pooler.supabase.com:6543/postgres',
+});
+
+// Connect once at server startup
+client.connect().then(() => {
+  console.log('PostgreSQL client connected (adminController)');
+}).catch(err => {
+  console.error('PostgreSQL connection error:', err);
 });
 
 export const adminLogin = async (req, res) => {
@@ -12,10 +20,8 @@ export const adminLogin = async (req, res) => {
     return res.status(400).json({ message: 'Please provide email and password' });
   }
   try {
-    await client.connect();
     const result = await client.query('SELECT * FROM "Admin" WHERE email = $1', [email]);
     const admin = result.rows[0];
-    await client.end();
     if (admin && (await bcrypt.compare(password, admin.password))) {
       // You can generate a token here if needed
       res.json({
