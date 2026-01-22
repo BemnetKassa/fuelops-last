@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
@@ -15,7 +15,7 @@ export default function AdminLoginPage() {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: username, password }),
+        body: JSON.stringify({ email, password }),
       });
       if (res.ok) {
         const data = await res.json();
@@ -40,12 +40,12 @@ export default function AdminLoginPage() {
         <h2 className="text-2xl font-bold mb-6 text-center">Admin Login</h2>
         {error && <div className="mb-4 text-red-500">{error}</div>}
         <div className="mb-4">
-          <label className="block mb-1 font-medium">Username</label>
+          <label className="block mb-1 font-medium">Email</label>
           <input
-            type="text"
+            type="email"
             className="w-full border px-3 py-2 rounded"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             required
             autoFocus
           />
