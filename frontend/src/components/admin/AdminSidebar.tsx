@@ -1,9 +1,13 @@
 "use client";
 
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Users, Fuel, BarChart, Shield } from 'lucide-react';
+import { Home, Users, Fuel, BarChart, Shield, Menu } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useState } from 'react';
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: Home },
@@ -15,9 +19,11 @@ const navItems = [
 
 const AdminSidebar = () => {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
+  const [open, setOpen] = useState(false);
 
-  return (
-    <Card className="h-screen w-64 flex-col justify-between p-4 border-r bg-background hidden md:flex">
+  const sidebarContent = (
+    <div className="h-full flex flex-col justify-between p-4">
       <div>
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-primary">FuelOps</h2>
@@ -40,6 +46,32 @@ const AdminSidebar = () => {
           ))}
         </nav>
       </div>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <>
+        <button
+          className="fixed top-4 left-4 z-50 rounded-md bg-white p-2 shadow md:hidden"
+          onClick={() => setOpen(true)}
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetContent side="left" className="p-0 w-64">
+            <SheetHeader>
+              <SheetTitle>Menu</SheetTitle>
+            </SheetHeader>
+            {sidebarContent}
+          </SheetContent>
+        </Sheet>
+      </>
+    );
+  }
+  return (
+    <Card className="h-screen w-64 flex-col justify-between p-4 border-r bg-background hidden md:flex">
+      {sidebarContent}
     </Card>
   );
 };
