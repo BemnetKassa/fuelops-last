@@ -1,5 +1,5 @@
 import StationSidebar from '@/components/station/StationSidebar';
-import Header from '@/components/shared/NavBar';
+import Header from '@/components/station/StationNavBar';
 
 export default function StationLayout({
   children,

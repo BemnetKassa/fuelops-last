@@ -5,7 +5,7 @@ import { LogOut, Fuel, List, BarChart, Home } from "lucide-react";
 export default function StationNavBar() {
   return (
     <nav className="flex items-center justify-between px-4 py-3 bg-green-700 text-white shadow-md">
-      <div className="flex items-center space-x-3">
+      <div className="flex-1 flex items-center space-x-3 justify-center md:justify-start">
         <Fuel className="h-6 w-6" />
         <span className="font-bold text-lg tracking-wide">FuelOps Station</span>
       </div>
