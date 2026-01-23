@@ -1,5 +1,5 @@
 import AdminSidebar from '@/components/admin/AdminSidebar';
-import Navbar from '@/components/shared/NavBar';
+import Navbar from '@/components/admin/AdminNavBar';
 
 export default function AdminLayout({
   children,
