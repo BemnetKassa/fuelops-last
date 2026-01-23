@@ -1,11 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LogOut, User, Shield, BarChart, Home, Menu } from "lucide-react";
 import { useState } from "react";
 
 export default function AdminNavBar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("admin-auth");
+    router.push("/adminLogin");
+  };
   return (
     <nav className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground shadow-md">
       <div className="flex-1 flex items-center space-x-3 justify-center md:justify-start">
@@ -26,7 +33,7 @@ export default function AdminNavBar() {
           <BarChart className="h-5 w-5" />
           <span>Reports</span>
         </Link>
-        <button className="ml-4 flex items-center space-x-1 hover:underline">
+        <button className="ml-4 flex items-center space-x-1 hover:underline" onClick={handleLogout}>
           <LogOut className="h-5 w-5" />
           <span>Logout</span>
         </button>
@@ -64,7 +71,10 @@ export default function AdminNavBar() {
             </Link>
             <button
               className="flex items-center w-full px-4 py-2 hover:bg-primary/10"
-              onClick={() => setDropdownOpen(false)}
+              onClick={() => {
+                setDropdownOpen(false);
+                handleLogout();
+              }}
             >
               <LogOut className="h-5 w-5 mr-2" /> Logout
             </button>

@@ -1,8 +1,16 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LogOut, Fuel, List, BarChart, Home } from "lucide-react";
 
 export default function StationNavBar() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("station-auth");
+    router.push("/stationLogin");
+  };
+
   return (
     <nav className="flex items-center justify-between px-4 py-3 bg-green-700 text-white shadow-md">
       <div className="flex-1 flex items-center space-x-3 justify-center md:justify-start">
@@ -22,7 +30,7 @@ export default function StationNavBar() {
           <Home className="h-5 w-5" />
           <span>Dashboard</span>
         </Link>
-        <button className="ml-4 flex items-center space-x-1 hover:underline">
+        <button className="ml-4 flex items-center space-x-1 hover:underline" onClick={handleLogout}>
           <LogOut className="h-5 w-5" />
           <span>Logout</span>
         </button>
