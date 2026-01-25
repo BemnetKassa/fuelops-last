@@ -1,12 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 
-import userRoutes from './src/routes/userRoutes.js';
-import stationRoutes from './src/routes/stationRoutes.js';
-import reservationRoutes from './src/routes/reservationRoutes.js';
-import driverRoutes from './src/routes/driverRoutes.js';
-import adminRoutes from './src/routes/adminRoutes.js';
-import stationAdminRoutes from './src/routes/stationAdminRoutes.js';
+import adminRoutes from './src/routes/admin/index.js';
+import driverRoutes from './src/routes/driver/index.js';
+import stationRoutes from './src/routes/station/index.js';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -16,12 +13,11 @@ app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 
 // Routes
-app.use('/api/users', userRoutes);
-app.use('/api/stations', stationRoutes);
-app.use('/api/driver', driverRoutes);
-app.use('/api/reservations', reservationRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/stationadmin', stationAdminRoutes);
+app.use('/api/driver', driverRoutes);
+app.use('/api/station', stationRoutes);
+// Backward compatibility: station admin login previously under /api/stationadmin
+app.use('/api/stationadmin', stationRoutes);
 
 // A simple test endpoint to check if the server is running
 app.get('/api/health', (req, res) => {
