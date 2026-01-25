@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import pkg from 'pg';
+import jwt from 'jsonwebtoken';
 
 const { Client } = pkg;
 
@@ -68,7 +69,15 @@ const loginUser = async (req, res) => {
 
     if (user && (await bcrypt.compare(password, user.password))) {
       console.log('Login successful for:', user.phone);
-      res.json({ id: user.id, name: user.name, email: user.email, phone: user.phone, role: user.role });
+      const token = jwt.sign(
+        { id: user.id, role: user.role, phone: user.phone, email: user.email, name: user.name },
+        process.env.JWT_SECRET || 'changeme',
+        { expiresIn: '7d' }
+      );
+      res.json({
+        token,
+        user: { id: user.id, name: user.name, email: user.email, phone: user.phone, role: user.role },
+      });
     } else {
       res.status(401).json({ message: 'Invalid phone number or password' });
     }
