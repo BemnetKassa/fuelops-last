@@ -27,9 +27,17 @@ const mockStations = [
   { id: 'STA-003', name: 'Downtown Diesel', location: 'Downtown', petrol: 7500, diesel: 3000 },
 ];
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 const AdminStationsPage = () => {
   const [stations, setStations] = useState(mockStations);
-
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('admin-auth')) {
+      router.push('/admin/login');
+    }
+  }, [router]);
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -21,7 +22,12 @@ const mockAuditLogs = [
 
 const AdminSecurityPage = () => {
   const [logs, setLogs] = useState(mockAuditLogs);
-
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('admin-auth')) {
+      router.push('/admin/login');
+    }
+  }, [router]);
   return (
     <Card>
       <CardHeader>

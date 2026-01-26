@@ -3,8 +3,16 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const AdminReportsPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('admin-auth')) {
+      router.push('/admin/login');
+    }
+  }, [router]);
   return (
     <Card>
       <CardHeader>

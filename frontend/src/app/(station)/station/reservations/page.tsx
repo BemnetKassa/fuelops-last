@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Table,
   TableBody,
@@ -22,16 +23,20 @@ const mockReservations = [
 
 const StationReservationsPage = () => {
   const [reservations, setReservations] = useState(mockReservations);
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('station-auth')) {
+      router.push('/station/stationLogin');
+    }
+  }, [router]);
 
   const handleConfirm = (reservationId: string) => {
-    // In a real app, this would trigger an API call
     setReservations(reservations.map(r => 
       r.id === reservationId ? { ...r, status: 'COMPLETED' } : r
     ));
   };
 
   const handleCancel = (reservationId: string) => {
-    // In a real app, this would trigger an API call
     setReservations(reservations.map(r => 
       r.id === reservationId ? { ...r, status: 'CANCELLED' } : r
     ));

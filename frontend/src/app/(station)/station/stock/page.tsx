@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,12 @@ const StationStockPage = () => {
   const [petrolToAdd, setPetrolToAdd] = useState('');
   const [dieselToAdd, setDieselToAdd] = useState('');
   const maxCapacity = 10000; // Liters for each tank
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('station-auth')) {
+      router.push('/station/stationLogin');
+    }
+  }, [router]);
 
   const handleAddPetrol = () => {
     const amount = parseInt(petrolToAdd, 10);

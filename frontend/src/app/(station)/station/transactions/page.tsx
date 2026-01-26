@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -20,7 +21,12 @@ const mockTransactions = [
 
 const StationTransactionsPage = () => {
   const [transactions, setTransactions] = useState(mockTransactions);
-
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('station-auth')) {
+      router.push('/station/stationLogin');
+    }
+  }, [router]);
   return (
     <Card>
       <CardHeader>

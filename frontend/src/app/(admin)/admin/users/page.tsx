@@ -30,9 +30,17 @@ const mockUsers = [
   { id: 'USR-005', name: 'Suspended Driver', email: 'blocked@example.com', role: 'DRIVER', status: 'SUSPENDED' },
 ];
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 const AdminUsersPage = () => {
   const [users, setUsers] = useState(mockUsers);
-
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('admin-auth')) {
+      router.push('/admin/login');
+    }
+  }, [router]);
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
