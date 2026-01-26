@@ -37,7 +37,13 @@ const ReserveFuelPage = () => {
 
     const fetchStations = async () => {
       try {
-        const res = await fetch('http://localhost:3001/api/stations');
+        const token = localStorage.getItem('fuelops-token');
+        const res = await fetch('http://localhost:3001/api/station', {
+          headers: {
+            'Authorization': token ? `Bearer ${token}` : '',
+            'Content-Type': 'application/json',
+          },
+        });
         if (!res.ok) {
           throw new Error('Failed to fetch stations');
         }
