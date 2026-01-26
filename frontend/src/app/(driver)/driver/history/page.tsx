@@ -50,7 +50,15 @@ const HistoryPage = () => {
   const fetchHistory = async (driverId: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/driver/history/${driverId}`);
+      const token = localStorage.getItem('fuelops-token');
+      const res = await fetch(`http://localhost:3001/api/driver/history/${driverId}`,
+        {
+          headers: {
+            'Authorization': token ? `Bearer ${token}` : '',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
       if (res.ok) {
         const data = await res.json();
         setRecords(data.fuelRecords);
