@@ -1,7 +1,16 @@
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Users, Fuel, Truck, AlertTriangle } from "lucide-react";
 
 const AdminDashboardPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('admin-auth')) {
+      router.push('/admin/login');
+    }
+  }, [router]);
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">System Overview</h1>

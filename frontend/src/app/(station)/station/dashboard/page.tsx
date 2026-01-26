@@ -1,7 +1,16 @@
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Fuel, List, Clock } from "lucide-react";
 
 const StationDashboardPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    if (!localStorage.getItem('station-auth')) {
+      router.push('/station/login');
+    }
+  }, [router]);
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">Station Dashboard</h1>
