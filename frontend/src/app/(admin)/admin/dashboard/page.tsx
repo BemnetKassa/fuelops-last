@@ -9,7 +9,7 @@ const AdminDashboardPage = () => {
   const router = useRouter();
   useEffect(() => {
     if (!localStorage.getItem('admin-auth')) {
-      router.push('/admin/login');
+      router.push('/adminLogin');
     }
   }, [router]);
   return (
