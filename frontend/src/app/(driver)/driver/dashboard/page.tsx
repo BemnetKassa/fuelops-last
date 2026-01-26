@@ -45,7 +45,15 @@ const DashboardPage = () => {
           throw new Error('No user found. Please log in.');
         }
 
-        const res = await fetch(`http://localhost:3001/api/driver/dashboard/${user.id}`);
+        const token = localStorage.getItem('fuelops-token');
+        const res = await fetch(`http://localhost:3001/api/driver/dashboard/${user.id}`,
+          {
+            headers: {
+              'Authorization': token ? `Bearer ${token}` : '',
+              'Content-Type': 'application/json'
+            }
+          }
+        );
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(errorData.message || 'Failed to fetch dashboard data');
