@@ -24,8 +24,11 @@ const LoginForm = () => {
       if (res.ok) {
         const data = await res.json();
         console.log('Login successful:', data);
-        // Save user data to localStorage
-        localStorage.setItem('fuelops-user', JSON.stringify(data));
+        // Save JWT token and user data to localStorage
+        if (data.token) {
+          localStorage.setItem('fuelops-token', data.token);
+        }
+        localStorage.setItem('fuelops-user', JSON.stringify(data.user || data));
         // Redirect to driver dashboard
         router.push('/driver/dashboard');
       } else {
