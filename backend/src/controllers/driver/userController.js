@@ -1,18 +1,6 @@
 import bcrypt from 'bcryptjs';
-import pkg from 'pg';
 import jwt from 'jsonwebtoken';
-
-const { Client } = pkg;
-
-const client = new Client({
-  connectionString: process.env.DATABASE_URL || 'postgresql://postgres.ixwtwjxjcgjrtnzbbznp:Bkbk123%21%40%23%28%29@aws-1-us-east-1.pooler.supabase.com:6543/postgres',
-});
-
-client.connect().then(() => {
-  console.log('PostgreSQL client connected (userController)');
-}).catch((err) => {
-  console.error('PostgreSQL connection error (userController):', err);
-});
+import pool from '../../db/pg.js';
 
 const registerUser = async (req, res) => {
   const { name, email, password, phone, role = 'DRIVER' } = req.body;
@@ -26,7 +14,7 @@ const registerUser = async (req, res) => {
   }
 
   try {
-    const existing = await client.query(
+    const existing = await pool.query(
       'SELECT id FROM "User" WHERE email = $1 OR phone = $2',
       [email, phone]
     );
@@ -38,7 +26,7 @@ const registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const inserted = await client.query(
+    const inserted = await pool.query(
       'INSERT INTO "User" (name, email, phone, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, phone, role',
       [name, email, phone, hashedPassword, role]
     );
@@ -60,7 +48,7 @@ const loginUser = async (req, res) => {
   }
 
   try {
-    const result = await client.query(
+    const result = await pool.query(
       'SELECT id, name, email, phone, password, role FROM "User" WHERE phone = $1',
       [phone]
     );

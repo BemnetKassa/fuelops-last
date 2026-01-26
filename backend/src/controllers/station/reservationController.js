@@ -1,4 +1,4 @@
-// ...existing code...
+import pool from '../../db/pg.js';
 
 export const createReservation = async (req, res) => {
   const { driverId, stationId, fuelAmount } = req.body;
@@ -8,18 +8,15 @@ export const createReservation = async (req, res) => {
   }
 
   try {
-    console.log(`Attempting to create reservation with stationId: ${stationId}`);
-    const reservation = await prisma.reservation.create({
-      data: {
-        driverId,
-        stationId,
-        fuelAmount,
-        status: 'PENDING',
-        expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000),
-      },
-    });
+    const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000);
+    const result = await pool.query(
+      `INSERT INTO "Reservation" ("driverId", "stationId", "fuelAmount", "status", "expiresAt")
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id, "driverId", "stationId", "fuelAmount", "status", "expiresAt"`,
+      [driverId, stationId, fuelAmount, 'PENDING', expiresAt]
+    );
 
-    res.status(201).json({ message: 'Reservation created successfully', reservation });
+    res.status(201).json({ message: 'Reservation created successfully', reservation: result.rows[0] });
   } catch (error) {
     console.error('Error creating reservation:', error);
     res.status(500).json({ message: 'Internal server error' });

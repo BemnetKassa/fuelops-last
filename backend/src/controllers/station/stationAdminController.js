@@ -1,10 +1,5 @@
 import bcrypt from 'bcryptjs';
-import pkg from 'pg';
-const { Client } = pkg;
-
-const client = new Client({
-  connectionString: process.env.DATABASE_URL || 'YOUR_SUPABASE_CONNECTION_STRING',
-});
+import pool from '../../db/pg.js';
 
 export const stationAdminLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -12,7 +7,7 @@ export const stationAdminLogin = async (req, res) => {
     return res.status(400).json({ message: 'Please provide email and password' });
   }
   try {
-    const result = await client.query('SELECT * FROM "StationAdmin" WHERE email = $1', [email]);
+    const result = await pool.query('SELECT * FROM "StationAdmin" WHERE email = $1', [email]);
     const stationAdmin = result.rows[0];
     if (stationAdmin && (await bcrypt.compare(password, stationAdmin.password))) {
       res.json({
