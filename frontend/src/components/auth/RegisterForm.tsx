@@ -18,7 +18,7 @@ const RegisterForm = () => {
     setError(null);
     const role = 'DRIVER'; // Set role to driver for public registration
     try {
-      const res = await fetch('http://localhost:3001/api/users/register', {
+      const res = await fetch('http://localhost:3001/api/driver/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
