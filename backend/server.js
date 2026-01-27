@@ -5,6 +5,7 @@ import cors from 'cors';
 import adminRoutes from './src/routes/admin/index.js';
 import driverRoutes from './src/routes/driver/index.js';
 import stationRoutes from './src/routes/station/index.js';
+import userRoutes from './src/routes/userRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -17,6 +18,7 @@ app.use(express.json()); // Middleware to parse JSON bodies
 app.use('/api/admin', adminRoutes);
 app.use('/api/driver', driverRoutes);
 app.use('/api/station', stationRoutes);
+app.use('/api/users', userRoutes);
 // Backward compatibility: station admin login previously under /api/stationadmin
 app.use('/api/stationadmin', stationRoutes);
 
