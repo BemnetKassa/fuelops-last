@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, List, Fuel, User, History, Menu, PanelLeft } from 'lucide-react';
+import { Home, List, Fuel, User, History, Menu, PanelLeft, Bell } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -12,6 +12,7 @@ const navItems = [
   { href: '/driver/dashboard', label: 'Dashboard', icon: Home },
   { href: '/driver/reserve', label: 'Reserve Fuel', icon: Fuel },
   { href: '/driver/history', label: 'History', icon: History },
+  { href: '/driver/notifications', label: 'Notifications', icon: Bell },
   { href: '/driver/profile', label: 'Profile', icon: User },
 ];
 
@@ -38,6 +39,7 @@ const DriverSidebar = () => {
                   ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:bg-muted'
               }`}
+              onClick={() => isMobile && setOpen(false)}
             >
               <item.icon className="h-5 w-5" />
               {!collapsed && <span>{item.label}</span>}
