@@ -42,7 +42,7 @@ const ProfilePage = () => {
       if (res.ok) {
         setSuccess('Profile updated successfully!');
         // Update local storage as well
-        const updatedUser = { ...user, ...data.user };
+        const updatedUser = { ...user, ...data };
         localStorage.setItem('fuelops-user', JSON.stringify(updatedUser));
         setUser(updatedUser);
         setIsEditing(false);
