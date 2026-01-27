@@ -92,13 +92,20 @@ const updateUser = async (req, res) => {
   const { id } = req.params;
   const { name, email, phone, password } = req.body;
   try {
-    // Build dynamic query for fields to update
+    // Fetch current user data
+    const currentResult = await client.query('SELECT id, name, email, phone FROM "User" WHERE id = $1', [id]);
+    if (currentResult.rowCount === 0) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+    const current = currentResult.rows[0];
+
+    // Only update fields that are different
     const fields = [];
     const values = [];
     let idx = 1;
-    if (name) { fields.push(`name = $${idx++}`); values.push(name); }
-    if (email) { fields.push(`email = $${idx++}`); values.push(email); }
-    if (phone) { fields.push(`phone = $${idx++}`); values.push(phone); }
+    if (name && name !== current.name) { fields.push(`name = $${idx++}`); values.push(name); }
+    if (email && email !== current.email) { fields.push(`email = $${idx++}`); values.push(email); }
+    if (phone && phone !== current.phone) { fields.push(`phone = $${idx++}`); values.push(phone); }
     if (password) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
@@ -106,7 +113,7 @@ const updateUser = async (req, res) => {
       values.push(hashedPassword);
     }
     if (fields.length === 0) {
-      return res.status(400).json({ message: 'No fields to update.' });
+      return res.status(400).json({ message: 'No changes detected.' });
     }
     values.push(id);
     const query = `UPDATE "User" SET ${fields.join(', ')} WHERE id = $${idx} RETURNING id, name, email, phone, role`;
@@ -114,7 +121,7 @@ const updateUser = async (req, res) => {
     if (result.rowCount === 0) {
       return res.status(404).json({ message: 'User not found.' });
     }
-    res.json(result.rows[0]);
+    res.json({ ...result.rows[0], message: 'Profile updated successfully!' });
   } catch (error) {
     console.error('Update user error:', error);
     res.status(500).json({ message: 'Server error during update' });

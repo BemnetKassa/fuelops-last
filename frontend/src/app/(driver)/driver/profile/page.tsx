@@ -31,16 +31,27 @@ const ProfilePage = () => {
     setError(null);
     setSuccess(null);
 
+    // Only send changed fields
+    const updates: any = {};
+    if (name !== user.name) updates.name = name;
+    if (email !== user.email) updates.email = email;
+    if (phone !== user.phone) updates.phone = phone;
+
+    if (Object.keys(updates).length === 0) {
+      setError('No changes detected. Please update at least one field.');
+      return;
+    }
+
     try {
       const res = await fetch(`http://localhost:3001/api/users/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone }),
+        body: JSON.stringify(updates),
       });
 
       const data = await res.json();
       if (res.ok) {
-        setSuccess('Profile updated successfully!');
+        setSuccess(data.message || 'Profile updated successfully!');
         // Update local storage as well
         const updatedUser = { ...user, ...data };
         localStorage.setItem('fuelops-user', JSON.stringify(updatedUser));
