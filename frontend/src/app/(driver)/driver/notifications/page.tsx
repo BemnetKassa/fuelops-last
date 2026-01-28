@@ -4,22 +4,92 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Bell, CheckCircle } from 'lucide-react';
 
-// Mock notifications data
-const mockNotifications = [
-  { id: 1, message: 'Your fuel reservation (ID: 12345) is confirmed at Central Station.', read: false, time: '10 minutes ago' },
-  { id: 2, message: 'Reminder: Your reservation at Highway Gas expires in 30 minutes.', read: false, time: '25 minutes ago' },
-  { id: 3, message: 'Your fuel purchase of 45L has been successfully recorded.', read: true, time: '2 hours ago' },
-  { id: 4, message: 'Welcome to FuelOps! Your account is now active.', read: true, time: '1 day ago' },
-];
+interface Notification {
+  id: string;
+  userId: string;
+  message: string;
+  read: boolean;
+  createdAt?: string;
+}
 
 const NotificationsPage = () => {
-  const [notifications, setNotifications] = useState(mockNotifications);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const markAsRead = (id: number) => {
-    setNotifications(
-      notifications.map((n) => (n.id === id ? { ...n, read: true } : n))
-    );
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const storedUser = localStorage.getItem('fuelops-user');
+        const token = localStorage.getItem('fuelops-token');
+
+        if (!storedUser || !token) {
+          setError('You must be logged in to view notifications.');
+          setLoading(false);
+          return;
+        }
+
+        const user = JSON.parse(storedUser);
+
+        const res = await fetch(`http://localhost:3001/api/driver/notifications/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.message || 'Failed to load notifications.');
+        }
+
+        const data: Notification[] = await res.json();
+        setNotifications(data);
+      } catch (err: any) {
+        console.error('Error fetching notifications:', err);
+        setError(err.message || 'Failed to load notifications.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  const markAsRead = async (id: string) => {
+    const token = localStorage.getItem('fuelops-token');
+    if (!token) return;
+
+    // Optimistic update
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
+
+    try {
+      const res = await fetch(`http://localhost:3001/api/driver/notifications/${id}/read`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        console.error('Failed to mark notification as read');
+      }
+    } catch (err) {
+      console.error('Error marking notification as read:', err);
+    }
   };
+
+  if (loading) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Your Recent Alerts</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>Loading notifications...</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card>
@@ -27,6 +97,9 @@ const NotificationsPage = () => {
         <CardTitle>Your Recent Alerts</CardTitle>
       </CardHeader>
       <CardContent>
+        {error && (
+          <p className="mb-4 text-sm text-destructive">{error}</p>
+        )}
         <div className="space-y-4">
           {notifications.map((notification) => (
             <div
@@ -46,7 +119,11 @@ const NotificationsPage = () => {
                 <p className={`font-medium ${notification.read ? '' : 'text-foreground'}`}>
                   {notification.message}
                 </p>
-                <p className="text-sm mt-1">{notification.time}</p>
+                {notification.createdAt && (
+                  <p className="text-sm mt-1 text-muted-foreground">
+                    {new Date(notification.createdAt).toLocaleString()}
+                  </p>
+                )}
               </div>
               {!notification.read && (
                 <button
@@ -58,8 +135,8 @@ const NotificationsPage = () => {
               )}
             </div>
           ))}
-          {notifications.length === 0 && (
-            <p>You have no new notifications.</p>
+          {notifications.length === 0 && !error && (
+            <p>You have no notifications yet.</p>
           )}
         </div>
       </CardContent>
