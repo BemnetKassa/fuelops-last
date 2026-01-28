@@ -27,7 +27,9 @@ const StationSidebar = () => {
     <div className={`h-full flex flex-col justify-between p-4 ${collapsed ? 'items-center' : ''}`}>
       <div>
         <div className={`mb-8 ${collapsed ? 'text-center' : ''}`}>
-          <h2 className={`text-2xl font-bold text-primary ${collapsed ? 'text-base' : ''}`}>FuelOps</h2>
+          <h2 className={`text-2xl font-bold text-primary ${collapsed ? 'text-base' : ''}`}>
+            {collapsed ? 'FO' : 'FuelOps'}
+          </h2>
           {!collapsed && <p className="text-sm text-muted-foreground">Station Portal</p>}
         </div>
         <nav className="space-y-2">
