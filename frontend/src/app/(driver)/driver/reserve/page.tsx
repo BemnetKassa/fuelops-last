@@ -23,7 +23,7 @@ interface Station {
 
 const ReserveFuelPage = () => {
   const [amount, setAmount] = useState('');
-  const [stationId, setStationId] = useState<string | undefined>(undefined);
+  const [stationId, setStationId] = useState<string>('');
   const [stations, setStations] = useState<Station[]>([]);
   const [user, setUser] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +48,13 @@ const ReserveFuelPage = () => {
           throw new Error('Failed to fetch stations');
         }
         const data = await res.json();
-        setStations(data);
+        const normalized: Station[] = data.map((s: any) => ({
+          id: String(s.id),
+          name: s.name,
+          latitude: s.latitude ?? s.lat ?? s.locationLat ?? 0,
+          longitude: s.longitude ?? s.lng ?? s.locationLng ?? 0,
+        }));
+        setStations(normalized);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An unknown error occurred');
       }
@@ -95,7 +101,7 @@ const ReserveFuelPage = () => {
       if (response.ok) {
         setSuccess(`Successfully reserved ${amount}L of fuel. Your reservation ID is ${data.id}.`);
         setAmount('');
-        setStationId(undefined);
+        setStationId('');
       } else {
         setError(data.message || 'Failed to create reservation.');
       }
@@ -127,7 +133,7 @@ const ReserveFuelPage = () => {
               
               <div className="space-y-2">
                 <Label htmlFor="station">Fuel Station</Label>
-                <Select onValueChange={setStationId} value={stationId}>
+                <Select onValueChange={(value) => setStationId(value)} value={stationId || undefined}>
                   <SelectTrigger id="station">
                     <SelectValue placeholder="Select a station from the list or map" />
                   </SelectTrigger>
