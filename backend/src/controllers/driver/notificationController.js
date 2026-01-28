@@ -25,6 +25,10 @@ export const getDriverNotifications = async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching driver notifications:', error);
+    // If Notification table does not exist yet, just return an empty list
+    if (error && error.code === '42P01') {
+      return res.json([]);
+    }
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -48,6 +52,10 @@ export const markNotificationRead = async (req, res) => {
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error marking notification as read:', error);
+    // If Notification table does not exist yet, surface a clear error
+    if (error && error.code === '42P01') {
+      return res.status(400).json({ message: 'Notifications are not set up in the database yet.' });
+    }
     res.status(500).json({ message: 'Server error' });
   }
 };
