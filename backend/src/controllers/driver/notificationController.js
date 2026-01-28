@@ -59,3 +59,54 @@ export const markNotificationRead = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// @desc    Seed sample notifications for a driver (DEV ONLY)
+// @route   POST /api/driver/notifications/:userId/seed
+// @access  Private (driver must match userId)
+export const seedDriverNotifications = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Ensure caller is the same driver
+    if (!req.user || req.user.id !== userId || req.user.role !== 'DRIVER') {
+      return res.status(403).json({ message: 'Not authorized to seed notifications for this user.' });
+    }
+
+    // Ensure driver exists
+    const userResult = await pool.query(
+      'SELECT id FROM "User" WHERE id = $1 AND role = $2',
+      [userId, 'DRIVER']
+    );
+
+    if (userResult.rowCount === 0) {
+      return res.status(404).json({ message: 'Driver not found.' });
+    }
+
+    const samples = [
+      'Your fuel reservation has been confirmed at Central Station.',
+      'Reminder: Your active reservation expires in 30 minutes.',
+      'Your last fuel purchase has been recorded successfully.',
+      'Welcome to FuelOps! Your driver account is now active.',
+    ];
+
+    for (const message of samples) {
+      await pool.query(
+        'INSERT INTO "Notification" ("userId", message, read) VALUES ($1, $2, $3)',
+        [userId, message, false]
+      );
+    }
+
+    const result = await pool.query(
+      'SELECT id, "userId", message, read, "createdAt" FROM "Notification" WHERE "userId" = $1 ORDER BY "createdAt" DESC NULLS LAST',
+      [userId]
+    );
+
+    res.status(201).json(result.rows);
+  } catch (error) {
+    console.error('Error seeding driver notifications:', error);
+    if (error && error.code === '42P01') {
+      return res.status(400).json({ message: 'Notifications table is not set up in the database.' });
+    }
+    res.status(500).json({ message: 'Server error' });
+  }
+};
