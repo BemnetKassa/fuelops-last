@@ -72,14 +72,20 @@ const ReserveFuelPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/reservations/create', {
+      const token = localStorage.getItem('fuelops-token');
+      if (!token) {
+        setError('You must be logged in to reserve fuel.');
+        return;
+      }
+
+      const response = await fetch('http://localhost:3001/api/driver/reserve', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          driverId: user.id,
-          stationId: stationId,
+          stationId,
           fuelAmount: parseFloat(amount),
         }),
       });
@@ -87,7 +93,7 @@ const ReserveFuelPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess(`Successfully reserved ${amount}L of fuel. Your reservation ID is ${data.reservation.id}.`);
+        setSuccess(`Successfully reserved ${amount}L of fuel. Your reservation ID is ${data.id}.`);
         setAmount('');
         setStationId(undefined);
       } else {
