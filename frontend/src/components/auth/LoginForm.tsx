@@ -2,6 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 const LoginForm = () => {
   const [phone, setPhone] = useState('');
@@ -43,63 +47,50 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-sm mx-auto">
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-          <span className="block sm:inline">{error}</span>
-        </div>
-      )}
-      <div>
-        <label
-          htmlFor="phone"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Phone Number
-        </label>
-        <div className="mt-1">
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brown-500 focus:border-brown-500 sm:text-sm"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Password
-        </label>
-        <div className="mt-1">
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brown-500 focus:border-brown-500 sm:text-sm"
-          />
-        </div>
-      </div>
-
-      <div>
-        <button
-          type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary btn-grow"
-        >
-          Sign in
-        </button>
-      </div>
-    </form>
+    <Card className="shadow-lg border-border/60">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-xl">Driver login</CardTitle>
+          <CardDescription>Access your reservations, history, and notifications.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {error && (
+            <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive" role="alert">
+              {error}
+            </div>
+          )}
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone number</Label>
+            <Input
+              id="phone"
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button type="submit" className="w-full btn-grow">
+            Sign in
+          </Button>
+        </CardFooter>
+      </form>
+    </Card>
   );
 };
 
