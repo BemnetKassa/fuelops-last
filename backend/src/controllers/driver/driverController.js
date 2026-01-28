@@ -73,7 +73,15 @@ export const getDriverHistory = async (req, res) => {
 				 ORDER BY fr."createdAt" DESC NULLS LAST`,
 				[userId]
 			);
-			fuelRecords = frResult.rows;
+			fuelRecords = frResult.rows.map((fr) => ({
+				id: fr.id,
+				liters: fr.liters ?? fr.fuelAmount ?? 0,
+				amount: fr.amount ?? 0,
+				createdAt: fr.createdAt,
+				station: {
+					name: fr.stationName || 'Unknown Station',
+				},
+			}));
 		} catch (e) {
 			fuelRecords = [];
 		}
@@ -89,7 +97,16 @@ export const getDriverHistory = async (req, res) => {
 				 ORDER BY r."createdAt" DESC NULLS LAST`,
 				[userId]
 			);
-			reservations = rResult.rows;
+			reservations = rResult.rows.map((r) => ({
+				id: r.id,
+				fuelAmount: r.fuelAmount ?? r.liters ?? 0,
+				status: r.status,
+				expiresAt: r.expiresAt,
+				createdAt: r.createdAt,
+				station: {
+					name: r.stationName || 'Unknown Station',
+				},
+			}));
 		} catch (e) {
 			reservations = [];
 		}
