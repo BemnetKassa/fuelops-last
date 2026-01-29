@@ -7,7 +7,13 @@ export const stationAdminLogin = async (req, res) => {
     return res.status(400).json({ message: 'Please provide email and password' });
   }
   try {
-    const result = await pool.query('SELECT * FROM "StationAdmin" WHERE email = $1', [email]);
+    const result = await pool.query(
+      `SELECT sa.*, s.name as "stationName"
+       FROM "StationAdmin" sa
+       LEFT JOIN "Station" s ON s.id = sa."stationId"
+       WHERE sa.email = $1`,
+      [email]
+    );
     const stationAdmin = result.rows[0];
     if (stationAdmin && (await bcrypt.compare(password, stationAdmin.password))) {
       res.json({
@@ -16,6 +22,7 @@ export const stationAdminLogin = async (req, res) => {
         email: stationAdmin.email,
         phone: stationAdmin.phone,
         stationId: stationAdmin.stationId,
+        stationName: stationAdmin.stationName || 'Unknown Station',
         role: 'STATION_ADMIN',
       });
     } else {

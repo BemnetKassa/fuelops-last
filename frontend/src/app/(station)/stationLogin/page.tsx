@@ -18,9 +18,10 @@ export default function StationLoginPage() {
                 body: JSON.stringify({ email, password }),
             });
             if (res.ok) {
-                const data = await res.json();
-                // Set authentication (e.g., cookie, localStorage, context, etc.)
-                localStorage.setItem('station-auth', 'true');
+                    const data = await res.json();
+                    // Persist station admin identity and station info
+                    localStorage.setItem('station-auth', 'true');
+                    localStorage.setItem('station-user', JSON.stringify(data));
                 router.push('/station/dashboard');
             } else {
                 const err = await res.json();
