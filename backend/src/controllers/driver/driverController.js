@@ -8,12 +8,14 @@ export const getDriverDashboard = async (req, res) => {
 	try {
 		// Verify driver exists (role DRIVER)
 		const userResult = await pool.query(
-			'SELECT id, role, name FROM "User" WHERE id = $1 AND role = $2',
+			'SELECT id, role, name, "licensePlate", "fuelType" FROM "User" WHERE id = $1 AND role = $2',
 			[userId, 'DRIVER']
 		);
 		if (userResult.rowCount === 0) {
 			return res.status(404).json({ message: 'Driver not found.' });
 		}
+
+		const user = userResult.rows[0];
 
 		// Latest active reservation
 		const resvResult = await pool.query(
@@ -30,13 +32,17 @@ export const getDriverDashboard = async (req, res) => {
 
 		const dashboardData = {
 			dailyQuota: { remaining: 0, total: 0 },
-			accountStatus: { status: 'active', plateNumber: 'N/A', fuelType: 'N/A' },
+			accountStatus: {
+				status: 'active',
+				plateNumber: user.licensePlate || 'N/A',
+				fuelType: user.fuelType || 'N/A',
+			},
 			activeReservation: activeReservation
 				? {
 						stationName: activeReservation.stationName || 'Unknown Station',
 						fuelAmount: activeReservation.fuelAmount,
 						expiresAt: activeReservation.expiresAt,
-					}
+				  }
 				: null,
 		};
 

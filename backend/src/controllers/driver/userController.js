@@ -3,10 +3,32 @@ import jwt from 'jsonwebtoken';
 import pool from '../../db/pg.js';
 
 const registerUser = async (req, res) => {
-  const { name, email, password, phone, role = 'DRIVER' } = req.body;
+  const {
+    name,
+    email,
+    password,
+    phone,
+    role = 'DRIVER',
+    licensePlate,
+    drivingLicenseId,
+    carType,
+    fuelType,
+  } = req.body;
 
-  if (!name || !email || !password || !phone) {
-    return res.status(400).json({ message: 'Please enter name, email, phone, and password.' });
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !phone ||
+    !licensePlate ||
+    !drivingLicenseId ||
+    !carType ||
+    !fuelType
+  ) {
+    return res.status(400).json({
+      message:
+        'Please enter name, email, phone, password, license plate, driving license ID, car type, and fuel type.',
+    });
   }
 
   if (role !== 'DRIVER') {
@@ -27,8 +49,8 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const inserted = await pool.query(
-      'INSERT INTO "User" (name, email, phone, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, phone, role',
-      [name, email, phone, hashedPassword, role]
+      'INSERT INTO "User" (name, email, phone, password, role, "licensePlate", "drivingLicenseId", "carType", "fuelType") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, name, email, phone, role, "licensePlate", "carType", "fuelType"',
+      [name, email, phone, hashedPassword, role, licensePlate, drivingLicenseId, carType, fuelType]
     );
 
     const user = inserted.rows[0];
@@ -49,7 +71,7 @@ const loginUser = async (req, res) => {
 
   try {
     const result = await pool.query(
-      'SELECT id, name, email, phone, password, role FROM "User" WHERE phone = $1',
+      'SELECT id, name, email, phone, password, role, "licensePlate", "drivingLicenseId", "carType", "fuelType" FROM "User" WHERE phone = $1',
       [phone]
     );
 
@@ -61,7 +83,20 @@ const loginUser = async (req, res) => {
         process.env.JWT_SECRET || 'changeme',
         { expiresIn: '7d' }
       );
-      res.json({ token, user: { id: user.id, name: user.name, email: user.email, phone: user.phone, role: user.role } });
+      res.json({
+        token,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          role: user.role,
+          licensePlate: user.licensePlate,
+          drivingLicenseId: user.drivingLicenseId,
+          carType: user.carType,
+          fuelType: user.fuelType,
+        },
+      });
     } else {
       res.status(401).json({ message: 'Invalid phone number or password' });
     }
