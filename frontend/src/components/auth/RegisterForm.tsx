@@ -6,20 +6,41 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui/select';
 
 const RegisterForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
   const [drivingLicenseId, setDrivingLicenseId] = useState('');
+  const [carType, setCarType] = useState('');
+  const [fuelType, setFuelType] = useState(''); 
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return; 
+    }
+
+    if (!carType || !fuelType) {
+      setError('Please select your car type and fuel type.');
+      return;
+    }
+    
     const role = 'DRIVER'; // Set role to driver for public registration
     try {
       const res = await fetch('http://localhost:3001/api/driver/register', {
@@ -27,7 +48,9 @@ const RegisterForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password, phone, role, licensePlate, drivingLicenseId }),
+        body: JSON.stringify({ name, email, password, confirmPassword, 
+                              phone, role, licensePlate, drivingLicenseId, 
+                              carType, fuelType }),
       });
 
       if (res.ok) {
@@ -112,6 +135,19 @@ const RegisterForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <div className="space-y-1">
+              <Label htmlFor="password">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                autoComplete="new-password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
@@ -136,6 +172,32 @@ const RegisterForm = () => {
                 onChange={(e) => setDrivingLicenseId(e.target.value)}
               />
             </div>
+              <div className="space-y-2">
+                <Label htmlFor="carType">Car type</Label>
+                <Select value={carType} onValueChange={setCarType}>
+                  <SelectTrigger id="carType">
+                    <SelectValue placeholder="Select car type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sedan">Sedan</SelectItem>
+                    <SelectItem value="suv">SUV</SelectItem>
+                    <SelectItem value="truck">Truck</SelectItem>
+                    <SelectItem value="van">Van</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="fuelType">Fuel type</Label>
+                <Select value={fuelType} onValueChange={setFuelType}>
+                  <SelectTrigger id="fuelType">
+                    <SelectValue placeholder="Select fuel type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="petrol">Petrol</SelectItem>
+                    <SelectItem value="diesel">Diesel</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
           </div>
         </CardContent>
         <CardFooter>
