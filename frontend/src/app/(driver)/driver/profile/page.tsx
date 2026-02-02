@@ -12,7 +12,7 @@ const ProfilePage = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [carType, setCarType] = useState('');
-  
+  const [fuelType, setFuelType] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -26,6 +26,7 @@ const ProfilePage = () => {
       setEmail(parsedUser.email);
       setPhone(parsedUser.phone);
       setCarType(parsedUser.carType);
+      setFuelType(parsedUser.fuelType);
     }
   }, []);
 
@@ -39,6 +40,8 @@ const ProfilePage = () => {
     if (name !== user.name) updates.name = name;
     if (email !== user.email) updates.email = email;
     if (phone !== user.phone) updates.phone = phone;
+    if (carType !== user.carType) updates.carType = carType;
+    if (fuelType !== user.fuelType) updates.fuelType = fuelType;
 
     if (Object.keys(updates).length === 0) {
       setError('No changes detected. Please update at least one field.');
@@ -100,8 +103,12 @@ const ProfilePage = () => {
             <Input value={user.role} disabled />
           </div>
            <div className="space-y-2">
-            <Label>carType</Label>
+            <Label>car Type</Label>
             <Input value={carType} disabled />
+          </div>
+           <div className="space-y-2">
+            <Label>Fuel type</Label>
+            <Input value={fuelType} disabled />
           </div>
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
