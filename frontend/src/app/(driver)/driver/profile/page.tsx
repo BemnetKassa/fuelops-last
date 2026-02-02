@@ -11,6 +11,8 @@ const ProfilePage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [carType, setCarType] = useState('');
+  
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -23,6 +25,7 @@ const ProfilePage = () => {
       setName(parsedUser.name);
       setEmail(parsedUser.email);
       setPhone(parsedUser.phone);
+      setCarType(parsedUser.carType);
     }
   }, []);
 
@@ -95,6 +98,10 @@ const ProfilePage = () => {
           <div className="space-y-2">
             <Label>Role</Label>
             <Input value={user.role} disabled />
+          </div>
+           <div className="space-y-2">
+            <Label>carType</Label>
+            <Input value={carType} disabled />
           </div>
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
