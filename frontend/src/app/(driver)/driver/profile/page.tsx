@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,8 +18,7 @@ const ProfilePage = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const [routerInitialized, setRouterInitialized] = useState(false);
-  const router = require('next/navigation').useRouter();
+  const router = useRouter();
   useEffect(() => {
     const userData = localStorage.getItem('fuelops-user');
     if (!userData) {
@@ -32,8 +32,7 @@ const ProfilePage = () => {
     setPhone(parsedUser.phone);
     setCarType(parsedUser.carType);
     setFuelType(parsedUser.fuelType);
-    setRouterInitialized(true);
-  }, [router]);
+  }, []);
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
