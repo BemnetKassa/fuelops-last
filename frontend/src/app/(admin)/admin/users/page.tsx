@@ -37,9 +37,9 @@ const AdminUsersPage = () => {
   const [users, setUsers] = useState(mockUsers);
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('admin-auth')) {
-      router.push('/adminLogin');
-    }
+      if (!localStorage.getItem('admin-auth')) {
+        router.push('/adminLogin');
+      }
   }, [router]);
   return (
     <Card>

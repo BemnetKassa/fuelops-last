@@ -8,9 +8,9 @@ import { Users, Fuel, Truck, AlertTriangle } from "lucide-react";
 const AdminDashboardPage = () => {
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('admin-auth')) {
-      router.push('/adminLogin');
-    }
+      if (!localStorage.getItem('admin-auth')) {
+        router.push('/adminLogin');
+      }
   }, [router]);
   return (
     <div className="space-y-6">

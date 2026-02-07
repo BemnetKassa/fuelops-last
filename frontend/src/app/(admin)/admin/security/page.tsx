@@ -24,9 +24,9 @@ const AdminSecurityPage = () => {
   const [logs, setLogs] = useState(mockAuditLogs);
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('admin-auth')) {
-      router.push('/adminLogin');
-    }
+      if (!localStorage.getItem('admin-auth')) {
+        router.push('/adminLogin');
+      }
   }, [router]);
   return (
     <Card>

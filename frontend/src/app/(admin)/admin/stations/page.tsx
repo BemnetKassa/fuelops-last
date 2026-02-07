@@ -34,9 +34,9 @@ const AdminStationsPage = () => {
   const [stations, setStations] = useState(mockStations);
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('admin-auth')) {
-      router.push('/adminLogin');
-    }
+      if (!localStorage.getItem('admin-auth')) {
+        router.push('/adminLogin');
+      }
   }, [router]);
   return (
     <Card>

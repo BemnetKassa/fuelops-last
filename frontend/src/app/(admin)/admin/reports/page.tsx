@@ -9,9 +9,9 @@ import { useRouter } from 'next/navigation';
 const AdminReportsPage = () => {
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('admin-auth')) {
-      router.push('/adminLogin');
-    }
+      if (!localStorage.getItem('admin-auth')) {
+        router.push('/adminLogin');
+      }
   }, [router]);
   return (
     <Card>
