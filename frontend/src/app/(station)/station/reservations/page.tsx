@@ -25,9 +25,9 @@ const StationReservationsPage = () => {
   const [reservations, setReservations] = useState(mockReservations);
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('station-auth')) {
-      router.push('/station/stationLogin');
-    }
+      if (!localStorage.getItem('station-auth')) {
+        router.push('/stationLogin');
+      }
   }, [router]);
 
   const handleConfirm = (reservationId: string) => {

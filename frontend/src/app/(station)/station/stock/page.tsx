@@ -16,9 +16,9 @@ const StationStockPage = () => {
   const maxCapacity = 10000; // Liters for each tank
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('station-auth')) {
-      router.push('/station/stationLogin');
-    }
+      if (!localStorage.getItem('station-auth')) {
+        router.push('/stationLogin');
+      }
   }, [router]);
 
   const handleAddPetrol = () => {

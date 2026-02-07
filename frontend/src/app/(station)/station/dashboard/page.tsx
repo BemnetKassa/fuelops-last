@@ -8,9 +8,9 @@ import { Fuel, List, Clock } from "lucide-react";
 const StationDashboardPage = () => {
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('station-auth')) {
-      router.push('/station/login');
-    }
+      if (!localStorage.getItem('station-auth')) {
+        router.push('/stationLogin');
+      }
   }, [router]);
   return (
     <div className="space-y-6">
