@@ -17,18 +17,23 @@ const ProfilePage = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
+  const [routerInitialized, setRouterInitialized] = useState(false);
+  const router = require('next/navigation').useRouter();
   useEffect(() => {
     const userData = localStorage.getItem('fuelops-user');
-    if (userData) {
-      const parsedUser = JSON.parse(userData);
-      setUser(parsedUser);
-      setName(parsedUser.name);
-      setEmail(parsedUser.email);
-      setPhone(parsedUser.phone);
-      setCarType(parsedUser.carType);
-      setFuelType(parsedUser.fuelType);
+    if (!userData) {
+      router.push('/public/login');
+      return;
     }
-  }, []);
+    const parsedUser = JSON.parse(userData);
+    setUser(parsedUser);
+    setName(parsedUser.name);
+    setEmail(parsedUser.email);
+    setPhone(parsedUser.phone);
+    setCarType(parsedUser.carType);
+    setFuelType(parsedUser.fuelType);
+    setRouterInitialized(true);
+  }, [router]);
 
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
