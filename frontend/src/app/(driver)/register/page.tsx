@@ -1,3 +1,4 @@
+// frontend/src/app/register/page.tsx
 import Link from 'next/link';
 import RegisterForm from '@/components/auth/RegisterForm';
 
