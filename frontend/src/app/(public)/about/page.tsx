@@ -1,13 +1,17 @@
+"use client";
+
 import React from "react";
-import { Target, Lightbulb, Shield, Users, History, User } from "lucide-react";
+import { motion } from "framer-motion";
+import { Target, Lightbulb, Shield, Users, History, Linkedin, Twitter, Github } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
 export default function AboutPage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 bg-muted/30">
+      <section className="relative py-20 bg-chart-4/20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
             Driving the Future of <span className="text-primary">Fuel Management</span>
@@ -111,25 +115,57 @@ export default function AboutPage() {
 
         {/* Team */}
         <section>
-          <h2 className="text-3xl font-bold text-center mb-12">Meet the Team</h2>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold mb-4">Meet the Visionary</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Driven by a passion for technology and logistics.
+            </p>
+          </motion.div>
+
           <div className="flex justify-center">
-            <Card className="max-w-xs w-full text-center hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="relative w-24 h-24 mx-auto mb-4">
-                  <Avatar className="w-24 h-24">
-                    <AvatarImage src="/images/bemnet.jpg" alt="Bemnet Kassa" />
-                    <AvatarFallback className="text-2xl font-bold bg-primary/10 text-primary">BK</AvatarFallback>
-                  </Avatar>
-                </div>
-                <CardTitle className="text-xl">Bemnet Kassa</CardTitle>
-                <p className="text-sm font-medium text-primary">Founder & CEO</p>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Visionary leader with a deep passion for logistics and technology.
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card className="max-w-md w-full text-center hover:shadow-2xl transition-all duration-300 border-primary/20 bg-gradient-to-b from-card to-muted/20 overflow-hidden">
+                <div className="h-24 bg-primary/10 w-full mb-[-48px]"></div>
+                <CardHeader className="relative pt-0">
+                  <div className="relative w-32 h-32 mx-auto mb-4 p-1 rounded-full bg-background shadow-lg">
+                    <Avatar className="w-full h-full">
+                      <AvatarImage src="/images/Bemnet.png" alt="Bemnet Kassa" className="object-cover" />
+                      <AvatarFallback className="text-3xl font-bold bg-primary/10 text-primary">BK</AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <CardTitle className="text-2xl font-bold">Bemnet Kassa</CardTitle>
+                  <p className="text-primary font-medium tracking-wide">Founder & CEO</p>
+                </CardHeader>
+                <CardContent className="space-y-6 pb-8">
+                  <p className="text-muted-foreground leading-relaxed px-4">
+                    A visionary software engineer dedicated to solving real-world challenges in transportation. Bemnet founded FuelOps to bridge the gap between complex logistics and simple, efficient management.
+                  </p>
+                  
+                  <div className="flex justify-center gap-4">
+                    <Button variant="ghost" size="icon" className="hover:text-primary hover:bg-primary/10 transition-colors">
+                      <Linkedin className="h-5 w-5" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="hover:text-primary hover:bg-primary/10 transition-colors">
+                      <Twitter className="h-5 w-5" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="hover:text-primary hover:bg-primary/10 transition-colors">
+                      <Github className="h-5 w-5" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </section>
       </div>
