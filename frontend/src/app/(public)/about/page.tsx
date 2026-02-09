@@ -115,57 +115,25 @@ export default function AboutPage() {
 
         {/* Team */}
         <section>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold mb-4">Meet the Visionary</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Driven by a passion for technology and logistics.
-            </p>
-          </motion.div>
-
+          <h2 className="text-3xl font-bold text-center mb-12">Meet the Team</h2>
           <div className="flex justify-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="max-w-md w-full text-center hover:shadow-2xl transition-all duration-300 border-primary/20 bg-gradient-to-b from-card to-muted/20 overflow-hidden">
-                <div className="h-24 bg-primary/10 w-full mb-[-48px]"></div>
-                <CardHeader className="relative pt-0">
-                  <div className="relative w-32 h-32 mx-auto mb-4 p-1 rounded-full bg-background shadow-lg">
-                    <Avatar className="w-full h-full">
-                      <AvatarImage src="/images/Bemnet.png" alt="Bemnet Kassa" className="object-cover" />
-                      <AvatarFallback className="text-3xl font-bold bg-primary/10 text-primary">BK</AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <CardTitle className="text-2xl font-bold">Bemnet Kassa</CardTitle>
-                  <p className="text-primary font-medium tracking-wide">Founder & CEO</p>
-                </CardHeader>
-                <CardContent className="space-y-6 pb-8">
-                  <p className="text-muted-foreground leading-relaxed px-4">
-                    A visionary software engineer dedicated to solving real-world challenges in transportation. Bemnet founded FuelOps to bridge the gap between complex logistics and simple, efficient management.
-                  </p>
-                  
-                  <div className="flex justify-center gap-4">
-                    <Button variant="ghost" size="icon" className="hover:text-primary hover:bg-primary/10 transition-colors">
-                      <Linkedin className="h-5 w-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="hover:text-primary hover:bg-primary/10 transition-colors">
-                      <Twitter className="h-5 w-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="hover:text-primary hover:bg-primary/10 transition-colors">
-                      <Github className="h-5 w-5" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <Card className="max-w-xs w-full text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <Avatar className="w-24 h-24">
+                    <AvatarImage src="/images/Bemnet.png" alt="Bemnet Kassa" />
+                    <AvatarFallback className="text-2xl font-bold bg-primary/10 text-primary">BK</AvatarFallback>
+                  </Avatar>
+                </div>
+                <CardTitle className="text-xl">Bemnet Kassa</CardTitle>
+                <p className="text-sm font-medium text-primary">Founder & CEO</p>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  a visionary software engineer with a passion for solving real-world problems in the transportation and logistics industry. Bemnet set out to create a solution that would bring efficiency, transparency, and ease to fuel management.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </section>
       </div>
