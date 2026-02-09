@@ -10,7 +10,7 @@ const LoginPage = () => {
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Sign in to your account</h1>
           <p className="text-sm text-muted-foreground">
             Or{' '}
-            <Link href="/driver/register" className="font-medium text-primary hover:underline">
+            <Link href="/register" className="font-medium text-primary hover:underline">
               create a new driver account
             </Link>
           </p>

@@ -10,7 +10,7 @@ const RegisterPage = () => {
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Create a driver account</h1>
           <p className="text-sm text-muted-foreground">
             Already have an account?{' '}
-            <Link href="/driver/login" className="font-medium text-primary hover:underline">
+            <Link href="/login" className="font-medium text-primary hover:underline">
               Sign in
             </Link>
           </p>
