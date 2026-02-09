@@ -91,27 +91,74 @@ export default function AboutPage() {
         </section>
 
         {/* Story */}
-        <section className="bg-muted/30 rounded-3xl p-8 md:p-12">
-          <div className="flex flex-col md:flex-row gap-12 items-start">
-            <div className="md:w-1/3">
-              <div className="bg-background p-4 rounded-xl inline-block shadow-sm">
+        <motion.section 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="bg-muted/30 rounded-3xl p-8 md:p-12 relative overflow-hidden"
+        >
+          {/* Decorative background element */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+
+          <div className="flex flex-col md:flex-row gap-12 items-start relative z-10">
+            <div className="md:w-1/3 text-center md:text-left sticky top-24">
+              <motion.div 
+                whileHover={{ rotate: 10, scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="bg-background p-6 rounded-2xl inline-block shadow-sm mb-6 cursor-pointer"
+              >
                  <History className="h-12 w-12 text-primary" />
-              </div>
-              <h2 className="text-3xl font-bold mt-6 mb-4">Our Story</h2>
+              </motion.div>
+              <h2 className="text-4xl font-bold mb-4 tracking-tight">Our Journey</h2>
+              <div className="h-1.5 w-24 bg-primary rounded-full mx-auto md:mx-0"></div>
             </div>
-            <div className="md:w-2/3 space-y-4 text-lg text-muted-foreground">
-              <p>
-                Founded in 2024 by <strong>Bemnet Kassa</strong>, FuelOps was born out of a passion for solving real-world problems in the transportation and logistics industry.
-              </p>
-              <p>
-                 With years of experience in fleet management and a deep understanding of the challenges faced by drivers and station operators, Bemnet set out to create a solution that would bring efficiency, transparency, and ease to fuel management.
-              </p>
-              <p>
-                From humble beginnings, FuelOps has grown into a dynamic platform that serves a diverse range of users, from small fleet operators to large logistics companies.
-              </p>
+            
+            <div className="md:w-2/3 space-y-8 relative border-l-2 border-primary/20 pl-8 md:pl-12 py-2">
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="relative"
+              >
+                 <div className="absolute -left-[41px] md:-left-[57px] top-1 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm"></div>
+                 <h3 className="text-xl font-semibold mb-2 text-foreground">Inception</h3>
+                 <p className="text-lg text-muted-foreground leading-relaxed">
+                  Founded in 2024 by <strong>Bemnet Kassa</strong>, FuelOps was born out of a passion for solving real-world problems in the transportation and logistics industry.
+                </p>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                className="relative"
+              >
+                 <div className="absolute -left-[41px] md:-left-[57px] top-1 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm"></div>
+                 <h3 className="text-xl font-semibold mb-2 text-foreground">The Problem</h3>
+                 <p className="text-lg text-muted-foreground leading-relaxed">
+                  With years of experience in fleet management, we identified a critical gap: the disconnect between drivers, stations, and managers. Bemnet set out to build the bridge.
+                </p>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                className="bg-card p-6 rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-shadow relative"
+              >
+                <div className="absolute -left-[41px] md:-left-[57px] top-8 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm"></div>
+                <h3 className="text-xl font-semibold mb-2 text-foreground">Growth</h3>
+                <p className="font-medium text-muted-foreground italic mb-2">
+                  "From humble beginnings to a dynamic platform."
+                </p>
+                <p className="text-muted-foreground">
+                  Today, FuelOps serves a diverse range of users, from small fleet operators to large logistics companies, bringing efficiency and transparency to every transaction.
+                </p>
+              </motion.div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Team */}
         <section>
@@ -130,7 +177,8 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  a visionary software engineer with a passion for solving real-world problems in the transportation and logistics industry. Bemnet set out to create a solution that would bring efficiency, transparency, and ease to fuel management.
+                  a visionary software engineer with a passion for solving real-world problems in the transportation and logistics industry. Bemnet set out to create a solution that would bring efficiency, tra
+                   management.
                 </p>
               </CardContent>
             </Card>

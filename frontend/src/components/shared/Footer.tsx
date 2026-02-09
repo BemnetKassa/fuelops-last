@@ -5,8 +5,33 @@ import { Facebook, Twitter, Linkedin } from 'lucide-react';
 const Footer = () => {
   return (
     <footer className="bg-card border-t">
-      <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="md:flex md:items-center md:justify-between">
+      <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <nav className="flex flex-wrap justify-center gap-8">
+            {[
+              { label: 'About', href: '/about' },
+              { label: 'Features', href: '/features' },
+              { label: 'Pricing', href: '/pricing' },
+              { label: 'Contact', href: '/contact' },
+            ].map((link) => (
+              <Link 
+                key={link.label} 
+                href={link.href} 
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200 hover:underline underline-offset-4"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          
+          <p className="text-sm text-muted-foreground flex items-center gap-1.5 opacity-90 hover:opacity-100 transition-opacity cursor-default">
+            <span>Built with</span>
+            <span className="text-red-500 animate-pulse" role="img" aria-label="love">❤️</span>
+            <span>for the modern fleet.</span>
+          </p>
+        </div>
+
+        <div className="border-t border-border/40 pt-4 md:flex md:items-center md:justify-between">
           <div className="flex justify-center space-x-6 md:order-2">
             <Link href="#" className="text-muted-foreground hover:text-foreground">
               <span className="sr-only">Facebook</span>
@@ -26,25 +51,6 @@ const Footer = () => {
               &copy; {new Date().getFullYear()} FuelOps. All rights reserved.
             </p>
           </div>
-        </div>
-        <div className="mt-8 border-t border-border pt-8 md:flex md:items-center md:justify-between">
-          <div className="text-color-black flex flex-wrap justify-center gap-x-6 gap-y-4">
-            <Link href="/about" className="text-base text-muted-foreground hover:text-foreground">
-              About
-            </Link>
-            <Link href="/features" className="text-base text-muted-foreground hover:text-foreground">
-              Features
-            </Link>
-            <Link href="/pricing" className="text-base text-muted-foreground hover:text-foreground">
-              Pricing
-            </Link>
-            <Link href="/contact" className="text-base text-muted-foreground hover:text-foreground">
-              Contact
-            </Link>
-          </div>
-          <p className="mt-8 text-center text-base text-muted-foreground md:mt-0">
-            Built with ❤️ for the modern fleet.
-          </p>
         </div>
       </div>
     </footer>
