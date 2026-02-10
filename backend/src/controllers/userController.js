@@ -1,18 +1,8 @@
 import bcrypt from 'bcryptjs';
-import pkg from 'pg';
+import pool from '../db/pg.js';
 import jwt from 'jsonwebtoken';
 
-const { Client } = pkg;
-
-const client = new Client({
-  connectionString: process.env.DATABASE_URL || 'postgresql://postgres.ixwtwjxjcgjrtnzbbznp:Bkbk123%21%40%23%28%29@aws-1-us-east-1.pooler.supabase.com:6543/postgres',
-});
-
-client.connect().then(() => {
-  console.log('PostgreSQL client connected (userController)');
-}).catch((err) => {
-  console.error('PostgreSQL connection error (userController):', err);
-});
+const client = pool;
 
 const registerUser = async (req, res) => {
   const { name, email, password, phone, role = 'DRIVER' } = req.body;
