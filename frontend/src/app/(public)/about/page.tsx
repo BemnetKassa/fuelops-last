@@ -25,27 +25,53 @@ export default function AboutPage() {
       <div className="container mx-auto px-4 py-16 space-y-20">
         {/* Mission & Vision */}
         <section className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 mb-2">
-              <Target className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl font-bold">Our Mission</h2>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-6"
+          >
+            <div className="flex items-center gap-4 mb-2">
+              <div className="p-3 bg-primary/10 rounded-xl">
+                 <Target className="h-8 w-8 text-primary" />
+              </div>
+              <h2 className="text-3xl font-bold tracking-tight">Our Mission</h2>
             </div>
             <p className="text-lg text-muted-foreground leading-relaxed">
               To simplify and modernize the way fleets and fuel stations operate, making fuel management smarter, more efficient, and more transparent for everyone involved. We believe in getting drivers back on the road faster and giving managers the data they need instantly.
             </p>
-          </div>
-          <div className="bg-card rounded-xl p-8 shadow-sm border">
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <Shield className="h-5 w-5 text-primary" />
-              Why it matters
-            </h3>
-            <p className="text-muted-foreground mb-4">
-              Fuel operations have lagged behind in the digital transformation. Inefficiencies cost time and money.
-            </p>
-            <p className="text-muted-foreground">
-              We are bridging that gap with robust, user-first technology that solves real-world logistical headaches.
-            </p>
-          </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="relative"
+          >
+             <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+             <div className="bg-card rounded-2xl p-8 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 group-hover:bg-primary/10 transition-colors duration-500"></div>
+                
+                <h3 className="text-xl font-semibold mb-6 flex items-center gap-3 relative z-10">
+                  <div className="bg-background p-2 rounded-lg shadow-sm border">
+                    <Shield className="h-5 w-5 text-primary" />
+                  </div>
+                  Why it matters
+                </h3>
+                
+                <div className="space-y-4 relative z-10 text-muted-foreground">
+                  <p>
+                    Fuel operations have lagged behind in the digital transformation. Inefficiencies cost time and money.
+                  </p>
+                  <div className="h-px bg-gradient-to-r from-border to-transparent w-full"></div>
+                  <p className="font-medium text-foreground/80">
+                    We are bridging that gap with robust, user-first technology that solves real-world logistical headaches.
+                  </p>
+                </div>
+            </div>
+          </motion.div>
         </section>
 
         {/* Values */}
