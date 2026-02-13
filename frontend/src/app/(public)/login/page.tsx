@@ -15,7 +15,7 @@ const LoginPage = () => {
         />
       </div>
       {/* Desktop image section */}
-      <div className="hidden md:flex w-1/2 h-full items-center justify-center bg-muted overflow-hidden shadow-lg m-0">
+      <div className="hidden md:flex w-1/2 h-full items-center justify-center bg-muted overflow-hidden shadow-lg m-0 filter brightness-60">
         <img
           src="/images/refueling.jpg"
           alt="Refueling"

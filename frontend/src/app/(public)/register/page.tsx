@@ -15,15 +15,15 @@ const RegisterPage = () => {
         />
       </div>
       {/* Desktop image section */}
-      <div className="hidden md:flex w-1/2 h-full min-h-screen max-h-screen items-stretch justify-stretch bg-muted overflow-hidden shadow-lg p-0 m-0">
+      <div className="hidden md:flex w-1/2 h-full items-center justify-center bg-muted overflow-hidden shadow-lg m-0 filter brightness-60">
         <img
           src="/images/refueling.jpg"
           alt="Refueling"
-          className="object-cover w-full h-full min-h-screen max-h-screen"
+          className="object-cover w-full h-[900px] max-h-full"
         />
       </div>
       {/* Form section */}
-      <div className="w-full md:w-1/2 flex items-center justify-center py-8">
+      <div className="w-full md:w-1/2 flex items-center justify-center py-4">
         <div className="w-full max-w-xl space-y-6 bg-white/90 md:bg-white rounded-3xl shadow-xl p-8 md:p-12">
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-bold tracking-tight text-foreground">Create a driver account</h1>
