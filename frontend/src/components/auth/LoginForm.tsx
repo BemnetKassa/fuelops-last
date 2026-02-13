@@ -49,7 +49,7 @@ const LoginForm = () => {
   return (
     <Card className="shadow-lg border-border/60">
       <form onSubmit={handleSubmit} className="space-y-6">
-        <CardHeader className="space-y-1">
+        <CardHeader className="space-y-1 mb-4">
           <CardTitle className="text-xl">Driver login</CardTitle>
           <CardDescription>Access your reservations, history, and notifications.</CardDescription>
         </CardHeader>

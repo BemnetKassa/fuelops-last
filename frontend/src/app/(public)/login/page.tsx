@@ -15,7 +15,7 @@ const LoginPage = () => {
         />
       </div>
       {/* Desktop image section */}
-      <div className="hidden md:flex w-1/2 h-full items-center justify-center bg-muted overflow-hidden shadow-lg">
+      <div className="hidden md:flex w-1/2 h-full items-center justify-center bg-muted overflow-hidden shadow-lg m-0">
         <img
           src="/images/refueling.jpg"
           alt="Refueling"
@@ -23,7 +23,7 @@ const LoginPage = () => {
         />
       </div>
       {/* Form section */}
-      <div className="w-full md:w-1/2 flex items-center justify-center py-8">
+      <div className="w-full md:w-1/2 flex items-center justify-center py-4">
         <div className="w-full max-w-md space-y-6 bg-white/90 md:bg-white rounded-3xl shadow-xl p-8 md:p-12">
           <div className="text-center space-y-2">
             <h1 className="text-3xl font-bold tracking-tight text-foreground">Sign in to your account</h1>

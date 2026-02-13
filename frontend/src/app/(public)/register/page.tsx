@@ -5,13 +5,21 @@ import RegisterForm from '@/components/auth/RegisterForm';
 
 const RegisterPage = () => {
   return (
-    <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)] items-center justify-center px-0 md:px-8 py-8 bg-background">
-      {/* Image section */}
-      <div className="hidden md:flex w-1/2 h-full items-center justify-center bg-muted rounded-l-3xl overflow-hidden shadow-lg">
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)] items-center justify-center px-0 md:px-0 py-0 bg-background relative">
+      {/* Mobile image section */}
+      <div className="flex md:hidden w-full h-56 items-center justify-center bg-muted overflow-hidden">
         <img
           src="/images/refueling.jpg"
           alt="Refueling"
-          className="object-cover w-full h-[500px] max-h-[80vh]"
+          className="object-cover w-full h-full"
+        />
+      </div>
+      {/* Desktop image section */}
+      <div className="hidden md:flex w-1/2 h-full min-h-screen max-h-screen items-stretch justify-stretch bg-muted overflow-hidden shadow-lg p-0 m-0">
+        <img
+          src="/images/refueling.jpg"
+          alt="Refueling"
+          className="object-cover w-full h-full min-h-screen max-h-screen"
         />
       </div>
       {/* Form section */}
