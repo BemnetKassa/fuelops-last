@@ -74,7 +74,7 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-linear-to-b from-background to-card/20">
+    <section className="md:py-24 py-14 bg-linear-to-b from-background to-card/20">
       <div className="container mx-auto text-center">
         <motion.h2
           className="text-5xl font-extrabold mb-6 tracking-tight text-foreground"

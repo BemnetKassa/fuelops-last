@@ -16,7 +16,7 @@ const fuelPrices = [
 
 export default function PricingPage() {
   return (
-    <div className="min-h-screen bg-muted/20 py-16">
+    <div className="min-h-screen bg-muted/20 py-12">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold tracking-tight mb-4">Current Fuel Prices</h1>

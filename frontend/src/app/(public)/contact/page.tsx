@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 
 export default function ContactPage() {
   return (
-    <div className="bg-muted/20 min-h-screen py-16">
+    <div className="bg-muted/20 min-h-screen py-12">
       <div className="container mx-auto px-4 max-w-6xl">
         <div className="text-center mb-16 space-y-4">
           <h1 className="text-4xl font-bold tracking-tight">Get in Touch</h1>
