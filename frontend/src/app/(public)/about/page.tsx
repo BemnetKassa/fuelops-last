@@ -122,22 +122,25 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="bg-muted/30 rounded-3xl p-8 md:p-12 relative overflow-hidden"
+          className="bg-muted/30 rounded-3xl p-8 md:p-12 relative overflow-hidden mb-12 md:mb-0"
         >
           {/* Decorative background element */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
 
           <div className="flex flex-col md:flex-row gap-12 items-start relative z-10">
             <div className="md:w-1/3 text-center md:text-left sticky top-24">
-              <motion.div 
-                whileHover={{ rotate: 10, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="bg-background p-6 rounded-2xl inline-block shadow-sm mb-6 cursor-pointer"
-              >
-                 <History className="h-12 w-12 text-primary" />
-              </motion.div>
-              <h2 className="text-4xl font-bold mb-4 tracking-tight">Our Journey</h2>
-              <div className="h-1.5 w-24 bg-primary rounded-full mx-auto md:mx-0"></div>
+              <div className="w-full md:w-1/3 text-center md:text-left md:sticky md:top-24 mb-8 md:mb-0">
+                <div className="flex flex-row items-center justify-center md:block mb-6 gap-3">
+                  <motion.div 
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="bg-background p-6 rounded-2xl shadow-sm cursor-pointer"
+                  >
+                    <History className="h-12 w-12 text-primary" />
+                  </motion.div>
+                  <h2 className="text-2xl font-bold tracking-tight md:text-4xl">Our Journey</h2>
+                </div>
+                <div className="h-1.5 w-24 bg-primary rounded-full mx-auto md:mx-0"></div>
             </div>
             
             <div className="md:w-2/3 space-y-8 relative border-l-2 border-primary/20 pl-8 md:pl-12 py-2">
@@ -183,6 +186,7 @@ export default function AboutPage() {
                 </p>
               </motion.div>
             </div>
+          </div>
           </div>
         </motion.section>
 
