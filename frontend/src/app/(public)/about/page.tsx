@@ -130,15 +130,17 @@ export default function AboutPage() {
           <div className="flex flex-col md:flex-row gap-12 items-start relative z-10">
             <div className="md:w-1/3 text-center md:text-left sticky top-24">
               <div className="w-full md:w-1/3 text-center md:text-left md:sticky md:top-24 mb-8 md:mb-0">
-                <div className="flex flex-row items-center justify-center md:block mb-6 gap-3">
+                {/* Mobile: icon and text side by side, Desktop: stacked */}
+                <div className="flex flex-row items-center justify-center gap-3 md:flex-col md:items-start md:justify-start md:gap-0 mb-6">
                   <motion.div 
                     whileHover={{ rotate: 10, scale: 1.1 }}
                     transition={{ type: "spring", stiffness: 300 }}
-                    className="bg-background p-6 rounded-2xl shadow-sm cursor-pointer"
+                    className="bg-background p-6 m-0 rounded-2xl shadow-sm cursor-pointer"
                   >
                     <History className="h-12 w-12 text-primary" />
                   </motion.div>
-                  <h2 className="text-2xl font-bold tracking-tight md:text-4xl">Our Journey</h2>
+                  <h2 className="text-2xl font-bold tracking-tight md:text-4xl md:mb-4 md:mt-4">Our Journey</h2>
+                </div>
                 </div>
                 <div className="h-1.5 w-24 bg-primary rounded-full mx-auto md:mx-0"></div>
             </div>
@@ -186,7 +188,6 @@ export default function AboutPage() {
                 </p>
               </motion.div>
             </div>
-          </div>
           </div>
         </motion.section>
 
