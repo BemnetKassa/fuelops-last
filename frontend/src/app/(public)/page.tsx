@@ -9,7 +9,6 @@ export default function Home() {
       <HeroSection />
       <RoleFeatures />
       <HowItWorks />
-      
     </div>
   );
 }
