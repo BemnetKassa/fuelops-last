@@ -14,26 +14,26 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <Link 
-            href="/about" 
+          <Link
+            href="/about"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             About
           </Link>
-          <Link 
-            href="/features" 
+          <Link
+            href="/features"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Features
           </Link>
-          <Link 
-            href="/pricing" 
+          <Link
+            href="/pricing"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Pricing
           </Link>
-          <Link 
-            href="/contact" 
+          <Link
+            href="/contact"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Contact
@@ -42,10 +42,10 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm">
-            <Link href="/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </Button>
           <Button asChild size="sm" className="btn-grow">
-            <Link href="/register">Get started</Link>
+            <Link href="/auth/register">Get started</Link>
           </Button>
         </div>
       </nav>
