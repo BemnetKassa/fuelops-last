@@ -1,13 +1,8 @@
 import bcrypt from 'bcryptjs';
-import pool from '../../db/pg.js';
+import { findAdminByEmail } from './admin.repository.js';
 
 export const loginAdmin = async (email, password) => {
-  const result = await pool.query(
-    'SELECT * FROM "Admin" WHERE email = $1',
-    [email]
-  );
-
-  const admin = result.rows[0];
+  const admin = await findAdminByEmail(email);
 
   if (!admin) {
     return null;
