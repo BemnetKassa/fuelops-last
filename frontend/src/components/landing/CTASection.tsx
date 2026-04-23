@@ -11,8 +11,8 @@ const CTASection = () => {
         <p className="text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
           Join FuelOps today and unlock a world of efficiency, savings, and control over your fleet's fuel consumption.
         </p>
-        <Link href="/register" className="bg-primary text-foreground hover:bg-background/20 font-bold py-4 px-8 rounded-lg text-primary-foreground">
-            Start Your Free Trial
+        <Link href="../auth/register" className="bg-primary text-foreground hover:bg-background/20 font-bold py-4 px-8 rounded-lg text-primary-foreground">
+          Start Your Free Trial
         </Link>
       </div>
     </section>

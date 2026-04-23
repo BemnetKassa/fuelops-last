@@ -2,10 +2,10 @@
 import React from "react";
 import FeaturesSection from '@/components/landing/FeaturesSection';
 import CTASection from '@/components/landing/CTASection';
-import { ShieldCheck, Cloud, Lock, Star, Users } from "lucide-react";
+import { ShieldCheck, Cloud, Lock, Star, Users, Link } from "lucide-react";
 
 export default function FeaturesPage() {
-  return (
+    return (
         <div className="min-h-screen bg-gradient-to-b from-primary/5 via-background to-card/30">
             {/* Hero Section */}
             <section className="relative overflow-hidden py-24 md:py-32 bg-gradient-to-br from-primary/10 to-background flex flex-col items-center justify-center">
@@ -18,7 +18,7 @@ export default function FeaturesPage() {
                         Modern, secure, and intelligent fuel management for ambitious fleets. Experience the next level of control, savings, and reliability.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="/register" className="bg-primary hover:bg-primary/80 text-primary-foreground font-bold py-4 px-8 rounded-lg shadow-lg transition-all text-lg">Start Free Trial</a>
+                        <a href="/auth/register" className="bg-primary hover:bg-primary/80 text-primary-foreground font-bold py-4 px-8 rounded-lg shadow-lg transition-all text-lg">Start Free Trial</a>
                         <a href="/contact" className="bg-background/80 border border-primary text-primary font-semibold py-4 px-8 rounded-lg hover:bg-primary/10 transition-all text-lg">Contact Sales</a>
                     </div>
                 </div>
@@ -112,5 +112,5 @@ export default function FeaturesPage() {
 
             <CTASection />
         </div>
-  );
+    );
 }

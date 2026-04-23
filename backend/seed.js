@@ -17,7 +17,7 @@ async function seed() {
 
   // Seed Admin
   await client.query(
-    `INSERT INTO "Admin" ("name", "email", "phone", "password")
+    `INSERT INTO "admin" ("name", "email", "phone", "password")
      VALUES ($1, $2, $3, $4)
      ON CONFLICT ("email") DO NOTHING`,
     ['Super Admin', 'admin@example.com', '1234567890', adminPassword]
@@ -25,7 +25,7 @@ async function seed() {
 
   // Seed StationAdmin
   await client.query(
-    `INSERT INTO "StationAdmin" ("name", "email", "phone", "password", "stationId")
+    `INSERT INTO "stationAdmin" ("name", "email", "phone", "password", "stationId")
      VALUES ($1, $2, $3, $4, $5)
      ON CONFLICT ("email") DO NOTHING`,
     ['Station Admin', 'stationadmin@example.com', '0987654321', stationAdminPassword, 'station001']
@@ -33,7 +33,7 @@ async function seed() {
 
   // Seed Driver (User)
   await client.query(
-    `INSERT INTO "User" ("name", "email", "phone", "password", "role")
+    `INSERT INTO "user" ("name", "email", "phone", "password", "role")
      VALUES ($1, $2, $3, $4, $5)
      ON CONFLICT ("email") DO NOTHING`,
     ['Driver One', 'driver1@example.com', '1112223333', driverPassword, 'DRIVER']

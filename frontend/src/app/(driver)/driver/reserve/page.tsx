@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 
-const StationMap = dynamic(() => import('@/components/driver/reserve/StationMap'), { 
+const StationMap = dynamic(() => import('@/components/driver/reserve/StationMap'), {
   ssr: false,
   loading: () => <div className="h-96 bg-muted rounded-lg flex items-center justify-center">Loading map...</div>
 });
@@ -124,14 +124,14 @@ const ReserveFuelPage = () => {
             <h3 className="text-lg font-semibold">Station Map</h3>
             <StationMap stations={stations} onStationSelect={handleStationSelectFromMap} />
           </div>
-          
+
           <div className="space-y-6">
             <h3 className="text-lg font-semibold">Reservation Details</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">{error}</div>}
               {success && <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">{success}</div>}
-              
-              <div className="space-y-2">
+
+              <div className="">
                 <Label htmlFor="station">Fuel Station</Label>
                 <Select onValueChange={(value) => setStationId(value)} value={stationId || undefined}>
                   <SelectTrigger id="station">
