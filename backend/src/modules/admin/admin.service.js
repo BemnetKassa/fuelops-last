@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { findAdminByEmail } from './admin.repository.js';
+import { findAdminByEmail, findReportById, findReports, updateReportStatus } from './admin.repository.js';
 
 export const loginAdmin = async (email, password) => {
   const admin = await findAdminByEmail(email);
@@ -22,3 +22,9 @@ export const loginAdmin = async (email, password) => {
     role: 'ADMIN',
   };
 };
+
+export const listReports = (filters) => findReports(filters);
+
+export const getReport = (id) => findReportById(id);
+
+export const setReportStatus = (id, status) => updateReportStatus(id, status);

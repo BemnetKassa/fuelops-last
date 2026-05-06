@@ -1,6 +1,6 @@
 import express from 'express';
 import auth from '../../middleware/auth.js';
-import { adminLogin } from './admin.controller.js';
+import { adminLogin, getReportById, getReports, updateReportStatus } from './admin.controller.js';
 
 const router = express.Router();
 
@@ -14,5 +14,9 @@ router.get('/dashboard', auth, (req, res) => {
   }
   res.json({ message: 'Welcome to the admin dashboard!' });
 });
+
+router.get('/reports', auth, getReports);
+router.get('/reports/:id', auth, getReportById);
+router.patch('/reports/:id/status', auth, updateReportStatus);
 
 export default router;
