@@ -40,11 +40,41 @@ export const adminLogin = async (req, res) => {
 export const getReports = async (req, res) => {
   if (!ensureAdmin(req, res)) return;
 
-  const { status, category, stationId, reporterId } = req.query;
+  const {
+    status,
+    category,
+    stationId,
+    reporterId,
+    stationName,
+    reporterPhone,
+    startDate,
+    endDate,
+    page = '1',
+    pageSize = '20',
+  } = req.query;
+
+  const pageNumber = Math.max(1, Number(page) || 1);
+  const sizeNumber = Math.min(100, Math.max(1, Number(pageSize) || 20));
 
   try {
-    const reports = await listReports({ status, category, stationId, reporterId });
-    return res.json(reports);
+    const { total, data } = await listReports({
+      status,
+      category,
+      stationId,
+      reporterId,
+      stationName,
+      reporterPhone,
+      startDate,
+      endDate,
+      page: pageNumber,
+      pageSize: sizeNumber,
+    });
+    return res.json({
+      total,
+      page: pageNumber,
+      pageSize: sizeNumber,
+      data,
+    });
   } catch (error) {
     return res.status(500).json({ message: 'Server error while fetching reports.' });
   }
