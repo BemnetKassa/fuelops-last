@@ -1,8 +1,10 @@
 import {
   createDriverReservationService,
+  createDriverReportService,
   getDriverDashboardService,
   getDriverHistoryService,
   getDriverNotificationsService,
+  getDriverReportsService,
   loginDriverService,
   markNotificationReadService,
   registerDriverService,
@@ -97,7 +99,17 @@ export const createDriverReservation = async (req, res) => {
     const reservation = await createDriverReservationService({ stationId, fuelAmount, driverId });
     return res.status(201).json(reservation);
   } catch (error) {
-    return res.status(500).json({ message: 'Server error' });
+    if (error?.code === "P2003") {
+      return res.status(400).json({
+        message: "Invalid stationId or driverId (foreign key constraint).",
+      });
+    }
+
+    if (error?.code === "P2025") {
+      return res.status(404).json({ message: "Related record not found." });
+    }
+
+    return res.status(500).json({ message: "Server error while creating reservation." });
   }
 };
 
@@ -137,5 +149,57 @@ export const seedDriverNotifications = async (req, res) => {
     return res.status(201).json(notifications);
   } catch (error) {
     return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const createDriverReport = async (req, res) => {
+  const reporterId = req.user?.id;
+  const { stationId, category, title, description } = req.body;
+
+  if (!reporterId) {
+    return res.status(401).json({ message: 'Invalid token payload.' });
+  }
+
+  if (!category || !title || !description) {
+    return res.status(400).json({ message: 'category, title, and description are required.' });
+  }
+
+  try {
+    const report = await createDriverReportService({
+      reporterId,
+      stationId: stationId || null,
+      category,
+      title,
+      description,
+    });
+
+    if (!report) {
+      return res.status(404).json({ message: 'Driver not found.' });
+    }
+
+    return res.status(201).json(report);
+  } catch (error) {
+    if (error?.code === 'P2003') {
+      return res.status(400).json({ message: 'Invalid stationId (foreign key constraint).' });
+    }
+    return res.status(500).json({ message: 'Server error while creating report.' });
+  }
+};
+
+export const getDriverReports = async (req, res) => {
+  const reporterId = req.user?.id;
+
+  if (!reporterId) {
+    return res.status(401).json({ message: 'Invalid token payload.' });
+  }
+
+  try {
+    const reports = await getDriverReportsService(reporterId);
+    if (!reports) {
+      return res.status(404).json({ message: 'Driver not found.' });
+    }
+    return res.json(reports);
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error while fetching reports.' });
   }
 };

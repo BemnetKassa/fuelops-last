@@ -72,3 +72,21 @@ export const seedNotifications = async (userId, messages) => {
 		data: messages.map((message) => ({ userId, message, read: false })),
 	});
 };
+
+export const createReport = ({ reporterId, stationId, category, title, description }) =>
+	prisma.report.create({
+		data: {
+			reporterId,
+			stationId,
+			category,
+			title,
+			description,
+		},
+	});
+
+export const findReportsByReporter = (reporterId) =>
+	prisma.report.findMany({
+		where: { reporterId },
+		orderBy: { createdAt: 'desc' },
+		include: { station: true },
+	});

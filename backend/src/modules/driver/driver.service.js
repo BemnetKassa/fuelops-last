@@ -9,7 +9,9 @@ import {
   findDriverByPhone,
   findNotificationsForUser,
   findReservationsForDriver,
+  findReportsByReporter,
   markNotificationAsRead,
+  createReport,
   seedNotifications,
 } from './driver.repository.js';
 
@@ -166,4 +168,22 @@ export const seedDriverNotificationsService = async (userId) => {
 
   await seedNotifications(userId, messages);
   return findNotificationsForUser(userId);
+};
+
+export const createDriverReportService = async ({ reporterId, stationId, category, title, description }) => {
+  const reporter = await findDriverById(reporterId);
+  if (!reporter) {
+    return null;
+  }
+
+  return createReport({ reporterId, stationId, category, title, description });
+};
+
+export const getDriverReportsService = async (reporterId) => {
+  const reporter = await findDriverById(reporterId);
+  if (!reporter) {
+    return null;
+  }
+
+  return findReportsByReporter(reporterId);
 };

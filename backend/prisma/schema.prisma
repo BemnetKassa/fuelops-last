@@ -26,6 +26,7 @@ model User {
   createdAt        DateTime       @default(now())
   reservations     Reservation[]  @relation("UserReservations")
   notifications    Notification[]
+  reports          Report[]
 }
 
 model Admin {
@@ -58,6 +59,7 @@ model Station {
 
   admins       StationAdmin[]
   reservations Reservation[]
+  reports      Report[]
   createdAt    DateTime       @default(now())
 }
 
@@ -94,4 +96,34 @@ enum ReservationStatus {
   CONFIRMED
   CANCELLED
   COMPLETED
+}
+
+model Report {
+  id          String         @id @default(uuid())
+  reporter    User           @relation(fields: [reporterId], references: [id])
+  reporterId  String
+  station     Station?       @relation(fields: [stationId], references: [id])
+  stationId   String?
+  category    ReportCategory
+  title       String
+  description String
+  status      ReportStatus   @default(OPEN)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+enum ReportCategory {
+  STATION_NOT_WORKING
+  POOR_SERVICE
+  BRIBERY
+  BLACK_MARKET
+  SAFETY
+  OTHER
+}
+
+enum ReportStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+  REJECTED
 }
