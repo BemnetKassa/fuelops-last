@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, List, Fuel, User, History, Menu, PanelLeft, Bell } from 'lucide-react';
+import { Home, List, Fuel, User, History, Menu, PanelLeft, Bell, Flag } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -13,6 +13,7 @@ const navItems = [
   { href: '/driver/reserve', label: 'Reserve Fuel', icon: Fuel },
   { href: '/driver/history', label: 'History', icon: History },
   { href: '/driver/notifications', label: 'Notifications', icon: Bell },
+  { href: '/driver/reports', label: 'Reports', icon: Flag },
   { href: '/driver/profile', label: 'Profile', icon: User },
 ];
 
@@ -36,11 +37,10 @@ const DriverSidebar = () => {
             <Link
               key={item.label}
               href={item.href}
-              className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-3'} rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                pathname === item.href
+              className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-3'} rounded-md px-3 py-2 text-sm font-medium transition-colors ${pathname === item.href
                   ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:bg-muted'
-              }`}
+                }`}
               onClick={() => isMobile && setOpen(false)}
             >
               <item.icon className="h-5 w-5" />
