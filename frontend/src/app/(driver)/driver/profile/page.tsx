@@ -81,52 +81,77 @@ const ProfilePage = () => {
   }
 
   return (
-    <Card className="max-w-2xl">
-      <form onSubmit={handleUpdate}>
-        <CardHeader>
-          <CardTitle>Personal Information</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {error && <div className="text-red-500 bg-red-100 p-3 rounded-md">{error}</div>}
-          {success && <div className="text-green-500 bg-green-100 p-3 rounded-md">{success}</div>}
-          
-          <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
-            <Input id="name" value={name} onChange={(e) => setName(e.target.value)} disabled={!isEditing} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email Address</Label>
-            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={!isEditing} />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} disabled={!isEditing} />
-          </div>
-          <div className="space-y-2">
-            <Label>Role</Label>
-            <Input value={user.role} disabled />
-          </div>
-           <div className="space-y-2">
-            <Label>car Type</Label>
-            <Input value={carType} disabled />
-          </div>
-           <div className="space-y-2">
-            <Label>Fuel type</Label>
-            <Input value={fuelType} disabled />
-          </div>
-        </CardContent>
-        <CardFooter className="flex justify-end gap-2">
-          {isEditing ? (
-            <>
-              <Button variant="ghost" onClick={() => setIsEditing(false)}>Cancel</Button>
-              <Button type="submit">Save Changes</Button>
-            </>
-          ) : (
-            <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
-          )}
-        </CardFooter>
+    <div className="space-y-6">
+      <div className="rounded-2xl border bg-gradient-to-br from-emerald-50 via-background to-sky-50 p-6">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-2xl font-semibold tracking-tight">Driver Profile</h1>
+          <p className="text-sm text-muted-foreground">
+            Keep your contact details up to date for smoother verification and dispatch.
+          </p>
+        </div>
+      </div>
+
+      <Card className="max-w-3xl">
+        <form onSubmit={handleUpdate}>
+          <CardHeader className="flex flex-col gap-1">
+            <CardTitle>Personal Information</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              {isEditing ? 'Edit your details and save changes.' : 'Review your account details.'}
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {error && <div className="text-red-700 bg-red-100 p-3 rounded-md">{error}</div>}
+            {success && <div className="text-green-700 bg-green-100 p-3 rounded-md">{success}</div>}
+
+            <div className="grid gap-5 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} disabled={!isEditing} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={!isEditing} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} disabled={!isEditing} />
+              </div>
+              <div className="space-y-2">
+                <Label>Role</Label>
+                <Input value={user.role} disabled />
+              </div>
+            </div>
+
+            <div className="rounded-xl border bg-muted/30 p-4">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Vehicle Details</h3>
+              <div className="mt-4 grid gap-5 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label>Car Type</Label>
+                  <Input value={carType} disabled />
+                </div>
+                <div className="space-y-2">
+                  <Label>Fuel Type</Label>
+                  <Input value={fuelType} disabled />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-between gap-2">
+            <div className="text-xs text-muted-foreground">
+              Last updated info is stored locally after save.
+            </div>
+            {isEditing ? (
+              <div className="flex gap-2">
+                <Button variant="ghost" onClick={() => setIsEditing(false)}>Cancel</Button>
+                <Button type="submit">Save Changes</Button>
+              </div>
+            ) : (
+              <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
+            )}
+          </CardFooter>
         </form>
       </Card>
+    </div>
   );
 };
 
