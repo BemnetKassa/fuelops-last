@@ -29,7 +29,7 @@ export const loginStationAdmin = async ({ email, password }) => {
 
 export const getStationsService = () => findAllStations();
 
-export const createReservationService = ({ driverId, stationId, fuelAmount }) => {
+export const createReservationService = ({ driverId, stationId, fuelAmount, fuelType }) => {
 	const expiresAt = new Date(Date.now() + 2 * 60 * 60 * 1000);
-	return createStationReservation({ driverId, stationId, fuelAmount, expiresAt });
+	return createStationReservation({ driverId, stationId, fuelAmount, fuelType, expiresAt });
 };

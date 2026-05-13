@@ -128,12 +128,13 @@ export const getDriverHistoryService = async (userId) => {
   return { fuelRecords, reservations };
 };
 
-export const createDriverReservationService = async ({ stationId, fuelAmount, driverId }) => {
+export const createDriverReservationService = async ({ stationId, fuelAmount, fuelType, driverId }) => {
   const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
   return createReservation({
     driverId,
     stationId,
     fuelAmount: Number(fuelAmount),
+    fuelType,
     expiresAt,
   });
 };

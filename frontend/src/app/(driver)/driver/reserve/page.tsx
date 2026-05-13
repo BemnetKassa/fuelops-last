@@ -24,10 +24,12 @@ interface Station {
 const ReserveFuelPage = () => {
   const [amount, setAmount] = useState('');
   const [stationId, setStationId] = useState<string>('');
+  const [fuelType, setFuelType] = useState<string>('');
   const [stations, setStations] = useState<Station[]>([]);
   const [user, setUser] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem('fuelops-user');
@@ -68,12 +70,14 @@ const ReserveFuelPage = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     setError(null);
     setSuccess(null);
 
-    if (!user || !stationId || !amount) {
+    if (!user || !stationId || !amount || !fuelType) {
       setError("Please fill in all fields.");
+      setLoading(false);
       return;
     }
 
@@ -81,6 +85,7 @@ const ReserveFuelPage = () => {
       const token = localStorage.getItem('fuelops-token');
       if (!token) {
         setError('You must be logged in to reserve fuel.');
+        setLoading(false);
         return;
       }
 
@@ -92,6 +97,7 @@ const ReserveFuelPage = () => {
         },
         body: JSON.stringify({
           stationId,
+          fuelType,
           fuelAmount: parseFloat(amount),
         }),
       });
@@ -102,12 +108,16 @@ const ReserveFuelPage = () => {
         setSuccess(`Successfully reserved ${amount}L of fuel. Your reservation ID is ${data.id}.`);
         setAmount('');
         setStationId('');
+        setFuelType('');
+        setLoading(false);
       } else {
         setError(data.message || 'Failed to create reservation.');
+        setLoading(false);
       }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
       console.error(err);
+      setLoading(false);
     }
   };
 
@@ -160,8 +170,21 @@ const ReserveFuelPage = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full btn-grow">
-                Confirm Reservation
+              <div className="space-y-2">
+                <Label htmlFor="fuelType">Fuel Type</Label>
+                <Select onValueChange={(value) => setFuelType(value)} value={fuelType || undefined}>
+                  <SelectTrigger id="fuelType">
+                    <SelectValue placeholder="Select fuel type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="PETROL">Petrol</SelectItem>
+                    <SelectItem value="DIESEL">Diesel</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button type="submit" className="w-full btn-grow" disabled={loading}>
+                {loading ? 'Creating Reservation...' : 'Confirm Reservation'}
               </Button>
             </form>
           </div>

@@ -8,12 +8,13 @@ export const findStationAdminByEmail = (email) =>
 
 export const findAllStations = () => prisma.station.findMany();
 
-export const createStationReservation = ({ driverId, stationId, fuelAmount, expiresAt }) =>
+export const createStationReservation = ({ driverId, stationId, fuelAmount, fuelType, expiresAt }) =>
 	prisma.reservation.create({
 		data: {
 			driverId,
 			stationId,
 			fuelAmount: Number(fuelAmount),
+			fuelType,
 			status: 'PENDING',
 			expiresAt,
 		},

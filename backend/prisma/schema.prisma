@@ -70,6 +70,7 @@ model Reservation {
   station    Station           @relation(fields: [stationId], references: [id])
   stationId  String
   fuelAmount Float
+  fuelType   FuelType
   status     ReservationStatus @default(PENDING)
   expiresAt  DateTime
   createdAt  DateTime          @default(now())
@@ -96,6 +97,11 @@ enum ReservationStatus {
   CONFIRMED
   CANCELLED
   COMPLETED
+}
+
+enum FuelType {
+  PETROL
+  DIESEL
 }
 
 model Report {

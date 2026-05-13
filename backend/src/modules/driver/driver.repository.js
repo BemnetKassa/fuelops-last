@@ -44,12 +44,13 @@ export const findReservationsForDriver = (driverId) =>
 		include: { station: true },
 	});
 
-export const createReservation = ({ driverId, stationId, fuelAmount, expiresAt }) =>
+export const createReservation = ({ driverId, stationId, fuelAmount, fuelType, expiresAt }) =>
 	prisma.reservation.create({
 		data: {
 			driverId,
 			stationId,
 			fuelAmount,
+			fuelType,
 			expiresAt,
 			status: 'PENDING',
 		},

@@ -32,14 +32,14 @@ export const getStations = async (req, res) => {
 };
 
 export const createReservation = async (req, res) => {
-	const { driverId, stationId, fuelAmount } = req.body;
+	const { driverId, stationId, fuelAmount, fuelType } = req.body;
 
-	if (!driverId || !stationId || !fuelAmount) {
-		return res.status(400).json({ message: 'Driver ID, Station ID, and fuel amount are required' });
+	if (!driverId || !stationId || !fuelAmount || !fuelType) {
+		return res.status(400).json({ message: 'Driver ID, Station ID, fuel amount, and fuel type are required' });
 	}
 
 	try {
-		const reservation = await createReservationService({ driverId, stationId, fuelAmount });
+		const reservation = await createReservationService({ driverId, stationId, fuelAmount, fuelType });
 		return res.status(201).json({ message: 'Reservation created successfully', reservation });
 	} catch (error) {
 		return res.status(500).json({ message: 'Internal server error' });

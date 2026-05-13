@@ -11,11 +11,13 @@ const LoginForm = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
     try {
       const res = await fetch('http://localhost:3001/api/driver/login', {
         method: 'POST',
@@ -28,6 +30,7 @@ const LoginForm = () => {
       if (res.ok) {
         const data = await res.json();
         console.log('Login successful:', data);
+        setLoading(false);
         // Save JWT token and user data to localStorage
         if (data.token) {
           localStorage.setItem('fuelops-token', data.token);
@@ -39,10 +42,12 @@ const LoginForm = () => {
         const errorData = await res.json();
         console.error('Login failed:', errorData.message);
         setError(errorData.message || 'Login failed. Please check your credentials.');
+        setLoading(false);
       }
     } catch (error) {
       console.error('An error occurred during login:', error);
       setError('An unexpected error occurred. Please try again.');
+      setLoading(false);
     }
   };
 
@@ -85,8 +90,8 @@ const LoginForm = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full btn-grow">
-            Sign in
+          <Button type="submit" className="w-full btn-grow" disabled={loading}>
+            {loading ? 'Signing in...' : 'Sign in'}
           </Button>
         </CardFooter>
       </form>

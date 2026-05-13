@@ -87,16 +87,17 @@ export const getDriverHistory = async (req, res) => {
   }
 };
 
+
 export const createDriverReservation = async (req, res) => {
-  const { stationId, fuelAmount } = req.body;
+  const { stationId, fuelAmount, fuelType } = req.body;
   const driverId = req.user.id;
 
-  if (!stationId || !fuelAmount) {
+  if (!stationId || !fuelAmount || !fuelType) {
     return res.status(400).json({ message: 'Missing required fields.' });
   }
 
   try {
-    const reservation = await createDriverReservationService({ stationId, fuelAmount, driverId });
+    const reservation = await createDriverReservationService({ stationId, fuelAmount, fuelType, driverId });
     return res.status(201).json(reservation);
   } catch (error) {
     if (error?.code === "P2003") {
@@ -113,6 +114,7 @@ export const createDriverReservation = async (req, res) => {
   }
 };
 
+
 export const getDriverNotifications = async (req, res) => {
   try {
     const notifications = await getDriverNotificationsService(req.params.userId);
@@ -125,6 +127,7 @@ export const getDriverNotifications = async (req, res) => {
   }
 };
 
+
 export const markNotificationRead = async (req, res) => {
   try {
     const notification = await markNotificationReadService(req.params.notificationId);
@@ -136,6 +139,7 @@ export const markNotificationRead = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 export const seedDriverNotifications = async (req, res) => {
   const { userId } = req.params;
@@ -151,6 +155,7 @@ export const seedDriverNotifications = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 export const createDriverReport = async (req, res) => {
   const reporterId = req.user?.id;
@@ -185,6 +190,7 @@ export const createDriverReport = async (req, res) => {
     return res.status(500).json({ message: 'Server error while creating report.' });
   }
 };
+
 
 export const getDriverReports = async (req, res) => {
   const reporterId = req.user?.id;
