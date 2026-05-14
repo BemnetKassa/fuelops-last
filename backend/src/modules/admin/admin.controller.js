@@ -1,4 +1,4 @@
-import { getReport, listReports, loginAdmin, setReportStatus } from './admin.service.js';
+import { getReport, listReports, loginAdmin, setReportStatus, getAdminProfile, listDrivers, listStations } from './admin.service.js';
 
 const allowedStatuses = new Set(['OPEN', 'UNDER_REVIEW', 'RESOLVED', 'REJECTED']);
 
@@ -36,6 +36,20 @@ export const adminLogin = async (req, res) => {
     });
   }
 };
+
+export const getProfileAdmin = async (req, res) => {
+  if (!ensureAdmin(req, res)) return;
+
+  try {
+    const adminProfile = await getAdminProfile(req.user.email);
+    return res.json(adminProfile);
+  } catch (error) {
+    console.error('Error fetching admin profile:', error);
+    return res.status(500).json({ message: 'Server error while fetching admin profile.' });
+  }
+
+};
+
 
 export const getReports = async (req, res) => {
   if (!ensureAdmin(req, res)) return;
@@ -110,5 +124,27 @@ export const updateReportStatus = async (req, res) => {
       return res.status(404).json({ message: 'Report not found.' });
     }
     return res.status(500).json({ message: 'Server error while updating report.' });
+  }
+};
+
+export const getDrivers = async (req, res) => {
+  if (!ensureAdmin(req, res)) return;
+
+  try {
+    const drivers = await listDrivers();
+    return res.json(drivers);
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error while fetching drivers.' });
+  }
+};
+
+export const getStations = async (req, res) => {
+  if (!ensureAdmin(req, res)) return;
+
+  try {
+    const stations = await listStations();
+    return res.json(stations);
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error while fetching stations.' });
   }
 };

@@ -5,6 +5,33 @@ export const findAdminByEmail = (email) =>
 		where: { email },
 	});
 
+export const findDrivers = () =>
+	prisma.user.findMany({
+		where: { role: 'DRIVER' },
+		orderBy: { createdAt: 'desc' },
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			phone: true,
+			role: true,
+			createdAt: true,
+		},
+	});
+
+export const findStations = () =>
+	prisma.station.findMany({
+		orderBy: { createdAt: 'desc' },
+		select: {
+			id: true,
+			name: true,
+			location: true,
+			latitude: true,
+			longitude: true,
+			createdAt: true,
+		},
+	});
+
 export const findReports = async ({
 	status,
 	category,

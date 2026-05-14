@@ -19,8 +19,15 @@ export default function AdminLoginPage() {
       });
       if (res.ok) {
         const data = await res.json();
-        // You can store a token or set auth state here
-        localStorage.setItem("admin-auth", "true");
+        localStorage.setItem("admin-auth", JSON.stringify({
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          role: data.role,
+        }));
+        if (data.token) {
+          localStorage.setItem("admin-token", data.token);
+        }
         router.push("/admin/dashboard");
       } else {
         const err = await res.json();

@@ -1,6 +1,6 @@
 import express from 'express';
 import auth from '../../middleware/auth.js';
-import { adminLogin, getReportById, getReports, updateReportStatus } from './admin.controller.js';
+import { adminLogin, getReportById, getReports, updateReportStatus, getProfileAdmin, getDrivers, getStations } from './admin.controller.js';
 
 const router = express.Router();
 
@@ -18,5 +18,8 @@ router.get('/dashboard', auth, (req, res) => {
 router.get('/reports', auth, getReports);
 router.get('/reports/:id', auth, getReportById);
 router.patch('/reports/:id/status', auth, updateReportStatus);
+router.get('/profile', auth, getProfileAdmin);
+router.get('/users', auth, getDrivers);
+router.get('/stations', auth, getStations);
 
 export default router;
