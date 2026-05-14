@@ -10,11 +10,12 @@ import { useState } from 'react';
 
 const navItems = [
   { href: '/driver/dashboard', label: 'Dashboard', icon: Home },
-  { href: '/driver/reserve', label: 'Reserve Fuel', icon: Fuel },
-  { href: '/driver/history', label: 'History', icon: History },
-  { href: '/driver/notifications', label: 'Notifications', icon: Bell },
-  { href: '/driver/reports', label: 'Reports', icon: Flag },
   { href: '/driver/profile', label: 'Profile', icon: User },
+  { href: '/driver/reserve', label: 'Reserve Fuel', icon: Fuel },
+  { href: '/driver/notifications', label: 'Notifications', icon: Bell },
+  { href: '/driver/history', label: 'History', icon: History },
+  { href: '/driver/reports', label: 'Reports', icon: Flag },
+
 ];
 
 const DriverSidebar = () => {
@@ -38,8 +39,8 @@ const DriverSidebar = () => {
               key={item.label}
               href={item.href}
               className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-3'} rounded-md px-3 py-2 text-sm font-medium transition-colors ${pathname === item.href
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:bg-muted'
+                ? 'bg-primary text-primary-foreground'
+                : 'text-muted-foreground hover:bg-muted'
                 }`}
               onClick={() => isMobile && setOpen(false)}
             >

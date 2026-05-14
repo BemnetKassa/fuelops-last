@@ -4,12 +4,12 @@ import { Bell, User, LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
-interface HeaderProps {
+interface NavbarProps {
   title: string;
   username?: string;
 }
 
-const Header = ({ title, username }: HeaderProps) => {
+const Navbar = ({ title, username }: NavbarProps) => {
   const router = useRouter();
   const handleLogout = () => {
     localStorage.removeItem('fuelops-user');
@@ -33,4 +33,4 @@ const Header = ({ title, username }: HeaderProps) => {
   );
 };
 
-export default Header;
+export default Navbar;

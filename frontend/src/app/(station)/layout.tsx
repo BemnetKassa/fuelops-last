@@ -1,11 +1,20 @@
+"use client";
 import StationSidebar from '@/components/station/StationSidebar';
 import Header from '@/components/station/StationNavBar';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function StationLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const StationLayout = ({ children }: { children: React.ReactNode; }) => {
+  const Router = useRouter();
+
+  useEffect(() => {
+    const userData = localStorage.getItem('fuelops-station');
+    if (!userData) {
+      Router.push('/auth/stationLogin');
+      return;
+    }
+  }, [Router]);
+
   return (
     <div className="flex h-screen bg-background">
       <StationSidebar />
@@ -18,3 +27,5 @@ export default function StationLayout({
     </div>
   );
 }
+
+export default StationLayout;

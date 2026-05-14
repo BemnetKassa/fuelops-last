@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 import { LogOut, User, Shield, BarChart, Home, Menu } from "lucide-react";
 import { useState } from "react";
 
-export default function AdminNavBar() {
+interface NavbarProps {
+  title: string;
+  username?: string;
+}
+
+const AdminNavBar = ({ title, username }: NavbarProps) => {
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter();
 
@@ -17,7 +23,8 @@ export default function AdminNavBar() {
     <nav className="flex items-center justify-between px-4 py-3 bg-primary text-primary-foreground shadow-md">
       <div className="flex-1 flex items-center space-x-3 justify-center md:justify-start">
         <Home className="h-6 w-6" />
-        <span className="font-bold text-lg tracking-wide">FuelOps Admin</span>
+        <span className="font-bold text-lg tracking-wide">{title} </span>
+        <span className="hidden md:inline-flex text-sm text-muted-foreground">Welcome, {username}</span>
       </div>
       {/* Desktop nav */}
       <div className="hidden md:flex items-center space-x-6">
@@ -84,3 +91,4 @@ export default function AdminNavBar() {
     </nav>
   );
 }
+export default AdminNavBar;
