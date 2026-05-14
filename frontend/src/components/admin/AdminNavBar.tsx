@@ -17,6 +17,7 @@ const AdminNavBar = ({ title, username }: NavbarProps) => {
 
   const handleLogout = () => {
     localStorage.removeItem("admin-auth");
+    localStorage.removeItem("admin-token");
     router.push("/adminLogin");
   };
   return (

@@ -21,26 +21,52 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// Mock data
-const mockUsers = [
-  { id: 'USR-001', name: 'John Doe', email: 'john.d@example.com', role: 'DRIVER', status: 'ACTIVE' },
-  { id: 'USR-002', name: 'Jane Smith', email: 'jane.s@example.com', role: 'DRIVER', status: 'ACTIVE' },
-  { id: 'USR-003', name: 'Operator One', email: 'op1@station.com', role: 'STATION_ATTENDANT', status: 'ACTIVE' },
-  { id: 'USR-004', name: 'Admin User', email: 'admin@fuelops.com', role: 'ADMIN', status: 'ACTIVE' },
-  { id: 'USR-005', name: 'Suspended Driver', email: 'blocked@example.com', role: 'DRIVER', status: 'SUSPENDED' },
-];
-
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+interface DriverRow {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  role: string;
+  createdAt: string;
+}
+
 const AdminUsersPage = () => {
-  const [users, setUsers] = useState(mockUsers);
+  const [users, setUsers] = useState<DriverRow[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('admin-auth')) {
+    const adminAuth = localStorage.getItem('admin-auth');
+    const token = localStorage.getItem('admin-token');
+    if (!adminAuth) {
       router.push('/adminLogin');
     }
   }, [router]);
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/api/admin/users', {
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Failed to fetch drivers');
+      }
+      setUsers(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchUsers();
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -48,49 +74,54 @@ const AdminUsersPage = () => {
         <Button>Add New User</Button>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <Badge variant="outline">{user.role}</Badge>
-                </TableCell>
-                <TableCell>
-                  <Badge variant={user.status === 'ACTIVE' ? 'secondary' : 'destructive'}>
-                    {user.status}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
-                        <span className="sr-only">Open menu</span>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit User</DropdownMenuItem>
-                      <DropdownMenuItem>Suspend User</DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive">Delete User</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
+        {error && <div className="mb-4 rounded-md bg-red-100 px-4 py-3 text-sm text-red-700">{error}</div>}
+        {loading ? (
+          <div className="text-sm text-muted-foreground">Loading drivers...</div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {users.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell className="font-medium">{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.phone}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline">{user.role}</Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="secondary">ACTIVE</Badge>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0">
+                          <span className="sr-only">Open menu</span>
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem>Edit User</DropdownMenuItem>
+                        <DropdownMenuItem>Suspend User</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive">Delete User</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </CardContent>
     </Card>
   );
